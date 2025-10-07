@@ -17,17 +17,19 @@ The `~/Code` directory contains multiple independent Swift repositories organize
 - **TarotSwift/**
   - `Stardust/` - Swift repository
 
-Each repository is its own git repository with its own dependencies, tests, and deployment. They are NOT a monorepo, but separate projects that all follow Swift-only principles.
+Each repository is its own git repository with its own dependencies, tests, and deployment. They are NOT a monorepo, but
+separate projects that all follow Swift-only principles.
 
 ## Core Principles
 
 ### 🚀 Swift Everywhere
 
-- **Server**: Vapor framework for APIs and web services
+- **Server**: Vapor or Hummingbird frameworks for APIs and web services
 - **Client**: Swift for iOS/macOS apps
 - **Shared**: Common Swift packages for models and business logic
 - **Testing**: Swift Testing framework (never XCTest)
 - **Infrastructure**: Swift-based CLI tools and scripts
+- **NEVER TypeScript**: All code must be Swift - no JavaScript, TypeScript, Node.js, or npm packages
 
 ### 📋 Development Rule: Roadmap-Only
 
@@ -251,7 +253,7 @@ enum ServiceError: Error, LocalizedError {
 
 1. **Never** implement without a roadmap
 2. **Never** use XCTest (only Swift Testing)
-3. **Never** write non-Swift code
+3. **Never** write non-Swift code (no TypeScript, JavaScript, Node.js, npm, etc.)
 4. **Never** modify existing migrations
 5. **Never** create manual Vapor routes (use OpenAPI)
 6. **Never** put business logic in controllers

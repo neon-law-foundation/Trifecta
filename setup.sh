@@ -16,16 +16,57 @@ mkdir -p "$CODE_DIR"
 # Create organization directories
 mkdir -p "$CODE_DIR/NLF"
 mkdir -p "$CODE_DIR/Sagebrush"
-mkdir -p "$CODE_DIR/ShookFamily"
 mkdir -p "$CODE_DIR/TarotSwift"
 
-# Copy CLAUDE.md
-echo "Copying CLAUDE.md..."
-cp "$SCRIPT_DIR/CLAUDE.md" "$CODE_DIR/CLAUDE.md"
+# Create symlinks for CLAUDE.md and .claude directory
+echo "Creating symlinks for CLAUDE.md and .claude..."
+if [ -f "$CODE_DIR/CLAUDE.md" ] && [ ! -L "$CODE_DIR/CLAUDE.md" ]; then
+    echo "  Removing existing CLAUDE.md file..."
+    rm "$CODE_DIR/CLAUDE.md"
+fi
+if [ -d "$CODE_DIR/.claude" ] && [ ! -L "$CODE_DIR/.claude" ]; then
+    echo "  Removing existing .claude directory..."
+    rm -rf "$CODE_DIR/.claude"
+fi
+ln -sf "$SCRIPT_DIR/CLAUDE.md" "$CODE_DIR/CLAUDE.md"
+ln -sf "$SCRIPT_DIR/.claude" "$CODE_DIR/.claude"
+echo "✓ Symlinks created (source: ~/dotfiles)"
 
-# Copy .claude directory
-echo "Copying .claude configuration..."
-cp -r "$SCRIPT_DIR/.claude" "$CODE_DIR/.claude"
+# Clone repositories if they don't exist
+echo ""
+echo "Checking repositories..."
+
+# Sagebrush/Web
+if [ ! -d "$CODE_DIR/Sagebrush/Web" ]; then
+    echo "Cloning Sagebrush/Web..."
+    git clone git@github.com:sagebrush-services/Web.git "$CODE_DIR/Sagebrush/Web"
+else
+    echo "✓ Sagebrush/Web already exists"
+fi
+
+# NLF/Web
+if [ ! -d "$CODE_DIR/NLF/Web" ]; then
+    echo "Cloning NLF/Web..."
+    git clone git@github.com:Neon-Law-Foundation/Web.git "$CODE_DIR/NLF/Web"
+else
+    echo "✓ NLF/Web already exists"
+fi
+
+# NLF/Standards
+if [ ! -d "$CODE_DIR/NLF/Standards" ]; then
+    echo "Cloning NLF/Standards..."
+    git clone git@github.com:neon-law-foundation/Standards.git "$CODE_DIR/NLF/Standards"
+else
+    echo "✓ NLF/Standards already exists"
+fi
+
+# TarotSwift/Stardust
+if [ ! -d "$CODE_DIR/TarotSwift/Stardust" ]; then
+    echo "Cloning TarotSwift/Stardust..."
+    git clone git@github.com:tarot-swift/Stardust.git "$CODE_DIR/TarotSwift/Stardust"
+else
+    echo "✓ TarotSwift/Stardust already exists"
+fi
 
 # Setup zsh aliases
 echo "Setting up zsh aliases..."
@@ -55,14 +96,13 @@ echo "    ├── CLAUDE.md"
 echo "    ├── .claude/"
 echo "    ├── NLF/"
 echo "    ├── Sagebrush/"
-echo "    ├── ShookFamily/"
 echo "    └── TarotSwift/"
 echo ""
 echo "Aliases configured in ~/.zshrc (source ~/dotfiles/aliases.zsh)"
 echo ""
 echo "Run 'source ~/.zshrc' to load aliases, then:"
 echo "  - Use 'code' to navigate to ~/Code"
-echo "  - Use 'nlf-standards', 'nlf-web', 'sagebrush', 'shook', 'tarot' for repos"
+echo "  - Use 'nlf-standards', 'nlf-web', 'sagebrush', 'tarot' for repos"
 echo "  - Use 'st', 'sb', 'sr' for swift test/build/run"
 echo ""
 echo "You can now clone repositories into their respective organization folders."
