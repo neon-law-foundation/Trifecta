@@ -3,7 +3,6 @@ alias code="cd ~/Code"
 alias nlf-standards="cd ~/Code/NLF/Standards"
 alias nlf-web="cd ~/Code/NLF/Web"
 alias sagebrush="cd ~/Code/Sagebrush/Web"
-alias shook="cd ~/Code/ShookFamily/Web"
 alias tarot="cd ~/Code/TarotSwift/Stardust"
 
 # Swift development aliases
