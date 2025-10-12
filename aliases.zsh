@@ -1,5 +1,4 @@
 # Code directory navigation aliases
-alias code="cd ~/Code"
 alias nlf-standards="cd ~/Code/NLF/Standards"
 alias nlf-web="cd ~/Code/NLF/Web"
 alias sagebrush="cd ~/Code/Sagebrush/Web"

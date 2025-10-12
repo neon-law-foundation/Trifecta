@@ -44,6 +44,14 @@ else
     echo "✓ Sagebrush/Web already exists"
 fi
 
+# Sagebrush/AWS
+if [ ! -d "$CODE_DIR/Sagebrush/AWS" ]; then
+    echo "Cloning Sagebrush/AWS..."
+    git clone git@github.com:sagebrush-services/AWS.git "$CODE_DIR/Sagebrush/AWS"
+else
+    echo "✓ Sagebrush/AWS already exists"
+fi
+
 # NLF/Web
 if [ ! -d "$CODE_DIR/NLF/Web" ]; then
     echo "Cloning NLF/Web..."
