@@ -15,7 +15,6 @@ formatting is correct before committing.
 located two layers beneath `~/Code`. For example:
 - `~/Code/NLF/Standards` is a repository
 - `~/Code/Sagebrush/Web` is a repository
-- `~/Code/ShookFamily/Web` is a repository
 
 Claude Code will automatically detect which repository you're working in based on your current directory and run
 all validation/test commands within that repository context.

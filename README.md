@@ -43,8 +43,8 @@ The setup script creates:
 ├── CLAUDE.md
 ├── .claude/
 ├── NLF/
+├── NeonLaw/
 ├── Sagebrush/
-├── ShookFamily/
 └── TarotSwift/
 ```
 
@@ -55,8 +55,8 @@ The setup script creates:
 - `code` - Navigate to ~/Code
 - `nlf-standards` - Navigate to ~/Code/NLF/Standards
 - `nlf-web` - Navigate to ~/Code/NLF/Web
+- `neonlaw` - Navigate to ~/Code/NeonLaw/Web
 - `sagebrush` - Navigate to ~/Code/Sagebrush/Web
-- `shook` - Navigate to ~/Code/ShookFamily/Web
 - `tarot` - Navigate to ~/Code/TarotSwift/Stardust
 
 ### Swift Development

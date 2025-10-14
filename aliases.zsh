@@ -1,6 +1,7 @@
 # Code directory navigation aliases
 alias nlf-standards="cd ~/Code/NLF/Standards"
 alias nlf-web="cd ~/Code/NLF/Web"
+alias neonlaw="cd ~/Code/NeonLaw/Web"
 alias sagebrush="cd ~/Code/Sagebrush/Web"
 alias tarot="cd ~/Code/TarotSwift/Stardust"
 

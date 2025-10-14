@@ -15,6 +15,7 @@ mkdir -p "$CODE_DIR"
 
 # Create organization directories
 mkdir -p "$CODE_DIR/NLF"
+mkdir -p "$CODE_DIR/NeonLaw"
 mkdir -p "$CODE_DIR/Sagebrush"
 mkdir -p "$CODE_DIR/TarotSwift"
 
@@ -68,6 +69,14 @@ else
     echo "✓ NLF/Standards already exists"
 fi
 
+# NeonLaw/Web
+if [ ! -d "$CODE_DIR/NeonLaw/Web" ]; then
+    echo "Cloning NeonLaw/Web..."
+    git clone git@github.com:Neon-Law/Web.git "$CODE_DIR/NeonLaw/Web"
+else
+    echo "✓ NeonLaw/Web already exists"
+fi
+
 # TarotSwift/Stardust
 if [ ! -d "$CODE_DIR/TarotSwift/Stardust" ]; then
     echo "Cloning TarotSwift/Stardust..."
@@ -103,6 +112,7 @@ echo "  ~/Code/"
 echo "    ├── CLAUDE.md"
 echo "    ├── .claude/"
 echo "    ├── NLF/"
+echo "    ├── NeonLaw/"
 echo "    ├── Sagebrush/"
 echo "    └── TarotSwift/"
 echo ""
@@ -110,7 +120,7 @@ echo "Aliases configured in ~/.zshrc (source ~/dotfiles/aliases.zsh)"
 echo ""
 echo "Run 'source ~/.zshrc' to load aliases, then:"
 echo "  - Use 'code' to navigate to ~/Code"
-echo "  - Use 'nlf-standards', 'nlf-web', 'sagebrush', 'tarot' for repos"
+echo "  - Use 'nlf-standards', 'nlf-web', 'neonlaw', 'sagebrush', 'tarot' for repos"
 echo "  - Use 'st', 'sb', 'sr' for swift test/build/run"
 echo ""
 echo "You can now clone repositories into their respective organization folders."

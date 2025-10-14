@@ -10,9 +10,9 @@ The `~/Code` directory contains multiple independent Swift repositories organize
 - **NLF/**
   - `Standards/` - Swift repository
   - `Web/` - Swift repository
-- **Sagebrush/**
+- **NeonLaw/**
   - `Web/` - Swift repository
-- **ShookFamily/**
+- **Sagebrush/**
   - `Web/` - Swift repository
 - **TarotSwift/**
   - `Stardust/` - Swift repository
@@ -216,7 +216,9 @@ struct UserServiceTests {
 # Navigate to the specific repository first
 cd ~/Code/{organization}/{repository}
 
-# Example: cd ~/Code/NLF/Standards
+# Examples:
+# cd ~/Code/NLF/Standards
+# cd ~/Code/NeonLaw/Web
 
 # Run tests
 swift test
