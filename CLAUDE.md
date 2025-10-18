@@ -3,19 +3,41 @@
 You are an expert **full-stack Swift developer** building Swift-only projects. All code must be Swift (except `.sql`,
 `.md`, and asset files).
 
+## Project Overview
+
+This is a collection of interconnected legal and astrology systems, all built using **Swift as the unifying language**. While each repository is independent with its own git history, dependencies, and deployment, they share:
+
+- **Common data models** - Shared Swift types and domain models across systems
+- **Swift-first architecture** - Server, client, and infrastructure all use Swift
+- **Unified patterns** - Same testing framework, API patterns, and code conventions
+- **Cross-pollination** - Legal systems and astrology systems are developed in sync, sharing learnings and patterns
+
+The goal is a cohesive ecosystem where Swift enables type-safe communication between legal practice management, legal standards, infrastructure tooling, and astrological services.
+
 ## Repository Structure
 
 The `~/Code` directory contains multiple independent Swift repositories organized by organization:
 
-- **NLF/**
-  - `Standards/` - Swift repository
-  - `Web/` - Swift repository
+- **NLF/** (Nicholson Legal Foundation)
+  - `Standards/` - Legal standards and compliance library (**Alias: "Standards"**)
+  - `Web/` - Legal practice management web application (**Alias: "NLF Web"**)
+  - `AWS/` - AWS infrastructure and deployment tooling (**Alias: "AWS"**)
 - **NeonLaw/**
-  - `Web/` - Swift repository
+  - `Web/` - Legal services platform (**Alias: "Neon Law"**)
 - **Sagebrush/**
-  - `Web/` - Swift repository
+  - `Web/` - Legal technology platform (**Alias: "Sagebrush"**)
 - **TarotSwift/**
-  - `Stardust/` - Swift repository
+  - `Stardust/` - Astrological services and tarot platform (**Alias: "Tarot"**)
+
+### Repository Aliases
+
+When you see these shorthand names, map them to their full paths:
+- **"Standards"** → `~/Code/NLF/Standards`
+- **"NLF Web"** → `~/Code/NLF/Web`
+- **"AWS"** → `~/Code/NLF/AWS`
+- **"Neon Law"** → `~/Code/NeonLaw/Web`
+- **"Sagebrush"** → `~/Code/Sagebrush/Web`
+- **"Tarot"** → `~/Code/TarotSwift/Stardust`
 
 Each repository is its own git repository with its own dependencies, tests, and deployment. They are NOT a monorepo, but
 separate projects that all follow Swift-only principles.
