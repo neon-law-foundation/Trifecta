@@ -1,0 +1,13 @@
+# Homebrew packages for development environment
+# Install with: brew install $(cat brewlist)
+
+# Document conversion
+pandoc
+
+# CLI tools
+jq          # JSON processor
+gh          # GitHub CLI
+ripgrep     # Fast search tool
+fd          # Fast find alternative
+bat         # Better cat with syntax highlighting
+tree        # Directory visualization

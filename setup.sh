@@ -104,6 +104,30 @@ else
     echo "⚠ ~/.zshrc not found. Create it and add: source $HOME/dotfiles/aliases.zsh"
 fi
 
+# Install Homebrew packages
+echo ""
+echo "Installing Homebrew packages..."
+if command -v brew &> /dev/null; then
+    BREWLIST="$SCRIPT_DIR/brewlist"
+    if [ -f "$BREWLIST" ]; then
+        # Read packages from brewlist, filtering out comments and empty lines
+        PACKAGES=$(grep -v '^#' "$BREWLIST" | grep -v '^[[:space:]]*$' | awk '{print $1}')
+
+        if [ -n "$PACKAGES" ]; then
+            echo "Installing packages: $(echo $PACKAGES | tr '\n' ' ')"
+            echo "$PACKAGES" | xargs brew install
+            echo "✓ Homebrew packages installed"
+        else
+            echo "⚠ No packages found in brewlist"
+        fi
+    else
+        echo "⚠ brewlist file not found at $BREWLIST"
+    fi
+else
+    echo "⚠ Homebrew not installed. Install from https://brew.sh"
+    echo "  Then run: brew install \$(grep -v '^#' $SCRIPT_DIR/brewlist | grep -v '^[[:space:]]*\$' | awk '{print \$1}')"
+fi
+
 echo ""
 echo "✓ Setup complete!"
 echo ""
@@ -116,7 +140,9 @@ echo "    ├── NeonLaw/"
 echo "    ├── Sagebrush/"
 echo "    └── TarotSwift/"
 echo ""
-echo "Aliases configured in ~/.zshrc (source ~/dotfiles/aliases.zsh)"
+echo "Configuration:"
+echo "  - Aliases configured in ~/.zshrc (source ~/dotfiles/aliases.zsh)"
+echo "  - Homebrew packages listed in ~/dotfiles/brewlist"
 echo ""
 echo "Run 'source ~/.zshrc' to load aliases, then:"
 echo "  - Use 'code' to navigate to ~/Code"
