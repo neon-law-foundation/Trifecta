@@ -1,107 +1,98 @@
 #!/bin/bash
 
-# Setup script for ~/Code directory with Claude configuration
-# This script creates the Code directory structure and copies Claude config files
+# Setup script for ~/Trifecta directory with Claude configuration
+# This script creates the Trifecta directory structure and symlinks Claude config files from ~/.trifecta
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CODE_DIR="$HOME/Code"
+TRIFECTA_DIR="$HOME/Trifecta"
 
-echo "Setting up ~/Code directory structure..."
+echo "Setting up ~/Trifecta directory structure..."
 
-# Create main Code directory if it doesn't exist
-mkdir -p "$CODE_DIR"
+# Create main Trifecta directory if it doesn't exist
+mkdir -p "$TRIFECTA_DIR"
 
 # Create organization directories
-mkdir -p "$CODE_DIR/NLF"
-mkdir -p "$CODE_DIR/NeonLaw"
-mkdir -p "$CODE_DIR/Sagebrush"
-mkdir -p "$CODE_DIR/TarotSwift"
+mkdir -p "$TRIFECTA_DIR/NeonLaw"
+mkdir -p "$TRIFECTA_DIR/NeonLawFoundation"
+mkdir -p "$TRIFECTA_DIR/SagebrushServices"
 
 # Create symlinks for CLAUDE.md and .claude directory
 echo "Creating symlinks for CLAUDE.md and .claude..."
-if [ -f "$CODE_DIR/CLAUDE.md" ] && [ ! -L "$CODE_DIR/CLAUDE.md" ]; then
+if [ -f "$TRIFECTA_DIR/CLAUDE.md" ] && [ ! -L "$TRIFECTA_DIR/CLAUDE.md" ]; then
     echo "  Removing existing CLAUDE.md file..."
-    rm "$CODE_DIR/CLAUDE.md"
+    rm "$TRIFECTA_DIR/CLAUDE.md"
 fi
-if [ -d "$CODE_DIR/.claude" ] && [ ! -L "$CODE_DIR/.claude" ]; then
+if [ -d "$TRIFECTA_DIR/.claude" ] && [ ! -L "$TRIFECTA_DIR/.claude" ]; then
     echo "  Removing existing .claude directory..."
-    rm -rf "$CODE_DIR/.claude"
+    rm -rf "$TRIFECTA_DIR/.claude"
 fi
-ln -sf "$SCRIPT_DIR/CLAUDE.md" "$CODE_DIR/CLAUDE.md"
-ln -sf "$SCRIPT_DIR/.claude" "$CODE_DIR/.claude"
-echo "✓ Symlinks created (source: ~/dotfiles)"
+ln -sf "$SCRIPT_DIR/CLAUDE.md" "$TRIFECTA_DIR/CLAUDE.md"
+ln -sf "$SCRIPT_DIR/.claude" "$TRIFECTA_DIR/.claude"
+echo "✓ Symlinks created (source: ~/.trifecta)"
 
 # Clone repositories if they don't exist
 echo ""
 echo "Checking repositories..."
 
-# Sagebrush/Web
-if [ ! -d "$CODE_DIR/Sagebrush/Web" ]; then
-    echo "Cloning Sagebrush/Web..."
-    git clone git@github.com:sagebrush-services/Web.git "$CODE_DIR/Sagebrush/Web"
+# SagebrushServices/Web
+if [ ! -d "$TRIFECTA_DIR/SagebrushServices/Web" ]; then
+    echo "Cloning SagebrushServices/Web..."
+    git clone git@github.com:sagebrush-services/Web.git "$TRIFECTA_DIR/SagebrushServices/Web"
 else
-    echo "✓ Sagebrush/Web already exists"
+    echo "✓ SagebrushServices/Web already exists"
 fi
 
-# Sagebrush/AWS
-if [ ! -d "$CODE_DIR/Sagebrush/AWS" ]; then
-    echo "Cloning Sagebrush/AWS..."
-    git clone git@github.com:sagebrush-services/AWS.git "$CODE_DIR/Sagebrush/AWS"
+# SagebrushServices/AWS
+if [ ! -d "$TRIFECTA_DIR/SagebrushServices/AWS" ]; then
+    echo "Cloning SagebrushServices/AWS..."
+    git clone git@github.com:sagebrush-services/AWS.git "$TRIFECTA_DIR/SagebrushServices/AWS"
 else
-    echo "✓ Sagebrush/AWS already exists"
+    echo "✓ SagebrushServices/AWS already exists"
 fi
 
-# NLF/Web
-if [ ! -d "$CODE_DIR/NLF/Web" ]; then
-    echo "Cloning NLF/Web..."
-    git clone git@github.com:Neon-Law-Foundation/Web.git "$CODE_DIR/NLF/Web"
+# NeonLawFoundation/Web
+if [ ! -d "$TRIFECTA_DIR/NeonLawFoundation/Web" ]; then
+    echo "Cloning NeonLawFoundation/Web..."
+    git clone git@github.com:neon-law-foundation/Web.git "$TRIFECTA_DIR/NeonLawFoundation/Web"
 else
-    echo "✓ NLF/Web already exists"
+    echo "✓ NeonLawFoundation/Web already exists"
 fi
 
-# NLF/Standards
-if [ ! -d "$CODE_DIR/NLF/Standards" ]; then
-    echo "Cloning NLF/Standards..."
-    git clone git@github.com:neon-law-foundation/Standards.git "$CODE_DIR/NLF/Standards"
+# NeonLawFoundation/Standards
+if [ ! -d "$TRIFECTA_DIR/NeonLawFoundation/Standards" ]; then
+    echo "Cloning NeonLawFoundation/Standards..."
+    git clone git@github.com:neon-law-foundation/Standards.git "$TRIFECTA_DIR/NeonLawFoundation/Standards"
 else
-    echo "✓ NLF/Standards already exists"
+    echo "✓ NeonLawFoundation/Standards already exists"
 fi
 
 # NeonLaw/Web
-if [ ! -d "$CODE_DIR/NeonLaw/Web" ]; then
+if [ ! -d "$TRIFECTA_DIR/NeonLaw/Web" ]; then
     echo "Cloning NeonLaw/Web..."
-    git clone git@github.com:Neon-Law/Web.git "$CODE_DIR/NeonLaw/Web"
+    git clone git@github.com:neon-law/Web.git "$TRIFECTA_DIR/NeonLaw/Web"
 else
     echo "✓ NeonLaw/Web already exists"
-fi
-
-# TarotSwift/Stardust
-if [ ! -d "$CODE_DIR/TarotSwift/Stardust" ]; then
-    echo "Cloning TarotSwift/Stardust..."
-    git clone git@github.com:tarot-swift/Stardust.git "$CODE_DIR/TarotSwift/Stardust"
-else
-    echo "✓ TarotSwift/Stardust already exists"
 fi
 
 # Setup zsh aliases
 echo "Setting up zsh aliases..."
 ZSHRC="$HOME/.zshrc"
-ALIAS_MARKER="# Code directory aliases (managed by dotfiles)"
+ALIAS_MARKER="# Trifecta directory aliases (managed by ~/.trifecta)"
 
 if [ -f "$ZSHRC" ]; then
     # Check if aliases are already sourced
     if ! grep -q "$ALIAS_MARKER" "$ZSHRC"; then
         echo "" >> "$ZSHRC"
         echo "$ALIAS_MARKER" >> "$ZSHRC"
-        echo "source $HOME/dotfiles/aliases.zsh" >> "$ZSHRC"
+        echo "source $HOME/.trifecta/aliases.zsh" >> "$ZSHRC"
         echo "✓ Added aliases to ~/.zshrc"
     else
         echo "✓ Aliases already configured in ~/.zshrc"
     fi
 else
-    echo "⚠ ~/.zshrc not found. Create it and add: source $HOME/dotfiles/aliases.zsh"
+    echo "⚠ ~/.zshrc not found. Create it and add: source $HOME/.trifecta/aliases.zsh"
 fi
 
 # Install Homebrew packages
@@ -132,21 +123,20 @@ echo ""
 echo "✓ Setup complete!"
 echo ""
 echo "Directory structure created:"
-echo "  ~/Code/"
-echo "    ├── CLAUDE.md"
-echo "    ├── .claude/"
-echo "    ├── NLF/"
+echo "  ~/Trifecta/"
+echo "    ├── CLAUDE.md (symlink → ~/.trifecta/CLAUDE.md)"
+echo "    ├── .claude/ (symlink → ~/.trifecta/.claude/)"
 echo "    ├── NeonLaw/"
-echo "    ├── Sagebrush/"
-echo "    └── TarotSwift/"
+echo "    ├── NeonLawFoundation/"
+echo "    └── SagebrushServices/"
 echo ""
 echo "Configuration:"
-echo "  - Aliases configured in ~/.zshrc (source ~/dotfiles/aliases.zsh)"
-echo "  - Homebrew packages listed in ~/dotfiles/brewlist"
+echo "  - Aliases configured in ~/.zshrc (source ~/.trifecta/aliases.zsh)"
+echo "  - Homebrew packages listed in ~/.trifecta/brewlist"
 echo ""
 echo "Run 'source ~/.zshrc' to load aliases, then:"
-echo "  - Use 'code' to navigate to ~/Code"
-echo "  - Use 'nlf-standards', 'nlf-web', 'neonlaw', 'sagebrush', 'tarot' for repos"
+echo "  - Use 'trifecta' to navigate to ~/Trifecta"
+echo "  - Use 'nlf-standards', 'nlf-web', 'neonlaw', 'sagebrush-web', 'sagebrush-aws' for repos"
 echo "  - Use 'st', 'sb', 'sr' for swift test/build/run"
 echo ""
-echo "You can now clone repositories into their respective organization folders."
+echo "Repositories are automatically cloned into their respective organization folders."

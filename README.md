@@ -1,6 +1,6 @@
-# Dotfiles
+# Trifecta Dotfiles
 
-Configuration files for setting up the ~/Code development environment with Claude Code.
+Configuration files for setting up the ~/Trifecta development environment with Claude Code.
 
 ## Contents
 
@@ -11,22 +11,26 @@ Configuration files for setting up the ~/Code development environment with Claud
   - `settings.local.json` - Local Claude Code settings
 - `aliases.zsh` - Shell aliases for navigation and Swift development
 - `setup.sh` - Setup script to configure a new machine
+- `brewlist` - List of Homebrew packages to install
 
 ## Installation
 
-Run the setup script from this directory:
+Clone this repository to `~/.trifecta`:
 
 ```bash
-cd ~/dotfiles
+git clone git@github.com:neon-law-foundation/Trifecta.git ~/.trifecta
+cd ~/.trifecta
 ./setup.sh
 ```
 
 This will:
 
-1. Create `~/Code` directory structure
-2. Copy `CLAUDE.md` to `~/Code/`
-3. Copy `.claude/` configuration to `~/Code/.claude/`
-4. Add alias sourcing to `~/.zshrc`
+1. Create `~/Trifecta` directory structure
+2. Symlink `CLAUDE.md` from `~/.trifecta/CLAUDE.md` to `~/Trifecta/CLAUDE.md`
+3. Symlink `.claude/` from `~/.trifecta/.claude` to `~/Trifecta/.claude/`
+4. Clone configured repositories into organization folders
+5. Install Homebrew packages from `brewlist`
+6. Add alias sourcing to `~/.zshrc`
 
 After setup, load the aliases:
 
@@ -39,25 +43,24 @@ source ~/.zshrc
 The setup script creates:
 
 ```
-~/Code/
-├── CLAUDE.md
-├── .claude/
-├── NLF/
+~/Trifecta/
+├── CLAUDE.md (symlink → ~/.trifecta/CLAUDE.md)
+├── .claude/ (symlink → ~/.trifecta/.claude/)
 ├── NeonLaw/
-├── Sagebrush/
-└── TarotSwift/
+├── NeonLawFoundation/
+└── SagebrushServices/
 ```
 
 ## Aliases
 
 ### Navigation
 
-- `code` - Navigate to ~/Code
-- `nlf-standards` - Navigate to ~/Code/NLF/Standards
-- `nlf-web` - Navigate to ~/Code/NLF/Web
-- `neonlaw` - Navigate to ~/Code/NeonLaw/Web
-- `sagebrush` - Navigate to ~/Code/Sagebrush/Web
-- `tarot` - Navigate to ~/Code/TarotSwift/Stardust
+- `trifecta` - Navigate to ~/Trifecta
+- `neonlaw` - Navigate to ~/Trifecta/NeonLaw/Web
+- `nlf-standards` - Navigate to ~/Trifecta/NeonLawFoundation/Standards
+- `nlf-web` - Navigate to ~/Trifecta/NeonLawFoundation/Web
+- `sagebrush-web` - Navigate to ~/Trifecta/SagebrushServices/Web
+- `sagebrush-aws` - Navigate to ~/Trifecta/SagebrushServices/AWS
 
 ### Swift Development
 
@@ -67,14 +70,14 @@ The setup script creates:
 
 ## Usage
 
-Clone repositories into their respective organization folders:
+The setup script automatically clones configured repositories. You can also manually clone additional repositories into their respective organization folders:
 
 ```bash
-cd ~/Code/NLF
-git clone <repository-url> Standards
+cd ~/Trifecta/NeonLawFoundation
+git clone <repository-url> <ProjectName>
 
-cd ~/Code/Sagebrush
-git clone <repository-url> Web
+cd ~/Trifecta/SagebrushServices
+git clone <repository-url> <ProjectName>
 ```
 
 Each repository is independent with its own dependencies, tests, and deployment.
