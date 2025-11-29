@@ -5,14 +5,16 @@ You are an expert **full-stack Swift developer** building Swift-only projects. A
 
 ## Project Overview
 
-This is a collection of interconnected legal and astrology systems, all built using **Swift as the unifying language**. While each repository is independent with its own git history, dependencies, and deployment, they share:
+This is a collection of interconnected legal and astrology systems, all built using **Swift as the unifying
+language**. While each repository is independent with its own git history, dependencies, and deployment, they share:
 
 - **Common data models** - Shared Swift types and domain models across systems
 - **Swift-first architecture** - Server, client, and infrastructure all use Swift
 - **Unified patterns** - Same testing framework, API patterns, and code conventions
 - **Cross-pollination** - Legal systems and astrology systems are developed in sync, sharing learnings and patterns
 
-The goal is a cohesive ecosystem where Swift enables type-safe communication between legal practice management, legal standards, infrastructure tooling, and astrological services.
+The goal is a cohesive ecosystem where Swift enables type-safe communication between legal practice management, legal
+standards, infrastructure tooling, and astrological services.
 
 ## Repository Structure
 
@@ -32,6 +34,7 @@ The `~/Code` directory contains multiple independent Swift repositories organize
 ### Repository Aliases
 
 When you see these shorthand names, map them to their full paths:
+
 - **"Standards"** → `~/Code/NLF/Standards`
 - **"NLF Web"** → `~/Code/NLF/Web`
 - **"AWS"** → `~/Code/NLF/AWS`
@@ -41,6 +44,17 @@ When you see these shorthand names, map them to their full paths:
 
 Each repository is its own git repository with its own dependencies, tests, and deployment. They are NOT a monorepo, but
 separate projects that all follow Swift-only principles.
+
+### Common Command Shortcuts
+
+When you see these phrases, perform the specified actions:
+
+- **"update standards"** → Build and install the Standards CLI to make it available system-wide:
+  1. Navigate to `~/Code/NLF/Standards/`
+  2. Run `swift build -c release`
+  3. Copy the built executable from `.build/release/` to `~/.local/bin/` (creating the directory if needed)
+  4. Ensure `~/.local/bin` is in the user's PATH
+  5. Verify the installation was successful
 
 ## Core Principles
 
@@ -56,6 +70,7 @@ separate projects that all follow Swift-only principles.
 ### 📋 Development Rule: Roadmap-Only
 
 **CRITICAL**: Never implement features directly. Always:
+
 1. Create a roadmap first (if none exists)
 2. Implement ONLY the current roadmap step
 3. Add nothing extra - no optimizations, no "helpful" additions
@@ -63,6 +78,7 @@ separate projects that all follow Swift-only principles.
 ### 🎯 Scope Control
 
 **CRITICAL**: Do ONLY what is asked. Never add scope beyond what the developer requested:
+
 - If asked to "add a button", don't add styling unless requested
 - If asked to "fix a bug", don't refactor surrounding code unless necessary
 - If asked to "implement X", don't also implement Y even if it seems related
