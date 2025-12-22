@@ -7,14 +7,19 @@
 ```
 
 Where:
-- `ISSUE_NUMBER` is the GitHub issue number containing the roadmap tasks (e.g., `11`, `15`)
-- `PHASE_NUMBER` (optional) specifies which phase to implement (e.g., `0`, `1`, `2`).
+
+- `ISSUE_NUMBER` is the GitHub issue number containing the roadmap tasks (e.g.,
+  `11`, `15`)
+- `PHASE_NUMBER` (optional) specifies which phase to implement (e.g., `0`, `1`,
+  `2`).
   If omitted, implements the next uncompleted phase.
 
 ## Overview
 
-This per-phase roadmap implementation leverages specialized Claude Code agents for focused development,
-ensuring better context management, incremental progress, and reviewable PRs. Each phase is implemented
+This per-phase roadmap implementation leverages specialized Claude Code agents
+for focused development,
+ensuring better context management, incremental progress, and reviewable PRs.
+Each phase is implemented
 and merged separately, allowing for continuous integration and reduced risk.
 
 ## Implementation Strategy
@@ -22,6 +27,7 @@ and merged separately, allowing for continuous integration and reduced risk.
 ### IMPORTANT: Per-Phase Approach
 
 **Each phase is implemented separately with its own PR**. This ensures:
+
 - Smaller, reviewable pull requests
 - Incremental progress tracking
 - Reduced risk and easier rollback
@@ -43,7 +49,8 @@ and merged separately, allowing for continuous integration and reduced risk.
 
 For the **current phase only**:
 
-1. **Mark task as in progress** by updating the GitHub issue with progress comments
+1. **Mark task as in progress** by updating the GitHub issue with progress
+  comments
 
 2. **Implementation based on task type**:
 
@@ -65,25 +72,29 @@ For the **current phase only**:
    - Add client-side validation
    - Update UI interactions
 
-3. **Documentation** - Use the **swift-documenter agent** for comprehensive documentation:
-   - Add comprehensive DocC comments to all public APIs
-   - Include usage examples and parameter descriptions
+3. **Documentation** - Use the **swift-documenter agent** for comprehensive
+  documentation:
 
-4. **Testing Phase**:
+- Add comprehensive DocC comments to all public APIs
+- Include usage examples and parameter descriptions
+
+1. **Testing Phase**:
    - Write Swift Testing tests (no XCTest)
    - **MANDATORY**: Run `swift test` and ensure ALL tests pass with exit code 0
    - **CRITICAL**: If tests fail or hang, fix all issues before proceeding
 
-5. **Commit Management** - Use the **commiter agent** for commits:
+2. **Commit Management** - Use the **commiter agent** for commits:
    - Validates all changes and runs tests
    - Creates conventional commit with proper format
    - Returns commit SHA for tracking
    - Update roadmap with commit SHA
 
-6. **Tracking Updates** - Use the **issue-updater agent** to update GitHub issue:
-   - Updates issue with commit SHA
-   - Mark task as completed with checkbox updates
-   - Report progress status and link commits
+3. **Tracking Updates** - Use the **issue-updater agent** to update GitHub
+  issue:
+
+- Updates issue with commit SHA
+- Mark task as completed with checkbox updates
+- Report progress status and link commits
 
 ### Phase Completion: Quality Assurance & PR Creation
 
@@ -98,7 +109,8 @@ For the **current phase only**:
    - Push updates to remote
 
 3. **MANDATORY: Execute `/create-pr` Command**:
-   - **CRITICAL**: Run the full `/create-pr` workflow from `.claude/commands/create-pr.md`
+   - **CRITICAL**: Run the full `/create-pr` workflow from
+     `.claude/commands/create-pr.md`
    - This includes all 8 steps with specialized agents:
      - Pre-check: Detect Swift file changes
      - Code review with developer agent
@@ -112,7 +124,8 @@ For the **current phase only**:
 4. **Phase-Specific PR Requirements**:
    - Title format: `[Roadmap] {RoadmapName} - Phase {N}: {PhaseName}`
    - Example: `[Roadmap] HTTPHeaderAuth - Phase 0: Research`
-   - **CRITICAL**: Use "Related to #{issue}" NOT "Fixes #{issue}" (except for final phase)
+   - **CRITICAL**: Use "Related to #{issue}" NOT "Fixes #{issue}" (except for
+     final phase)
    - Include all quality gates verification from `/create-pr`
 
 5. **PR Description Template**:
@@ -136,7 +149,8 @@ For the **current phase only**:
 6. **Post-PR Issue Updates**:
    - Issue updates handled by `/create-pr` workflow
    - Update Status section with phase completion
-   - **CRITICAL**: Update Phase Tracking table with branch, commits, PR link, and status
+   - **CRITICAL**: Update Phase Tracking table with branch, commits, PR link,
+     and status
    - Check off completed tasks for this phase only
    - Add comment with PR link and commit SHAs
 
@@ -262,6 +276,7 @@ Use the pull-request-manager agent to create PR "[Roadmap] HTTPHeaderAuth - Phas
 ## Error Handling with Agents
 
 If any agent fails:
+
 1. The failure is isolated to that agent's context
 2. Main thread remains clean for debugging
 3. Can retry specific agent task without losing progress
@@ -270,6 +285,7 @@ If any agent fails:
 ## Phase Completion Criteria
 
 A phase is complete when:
+
 - ✅ All phase tasks checked in GitHub issue
 - ✅ Phase commit SHAs recorded in issue comments
 - ✅ **Phase Tracking table updated** with branch, commits, PR link, and status
@@ -282,6 +298,7 @@ A phase is complete when:
 ## Roadmap Completion Criteria
 
 The entire roadmap is complete when:
+
 - ✅ All phases implemented and merged
 - ✅ Final PR uses "Fixes #{issue}" to close issue
 - ✅ All tasks across all phases checked
@@ -306,11 +323,10 @@ The entire roadmap is complete when:
 ## PR Linking Rules
 
 | Phase | PR Title Format | Issue Reference |
-|-------|----------------|-----------------|
+| ------- | ---------------- | ----------------- |
 | Phase 0-N (not final) | `[Roadmap] Name - Phase N: Title` | `Related to #{issue}` |
 | Final Phase | `[Roadmap] Name - Phase N: Title` | `Fixes #{issue}` |
 
-This per-phase approach ensures incremental delivery, reduced risk, and continuous integration
+This per-phase approach ensures incremental delivery, reduced risk, and
+continuous integration
 while maintaining high quality through specialized agent delegation.
-
-

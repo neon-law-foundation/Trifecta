@@ -6,7 +6,8 @@
 /lint-sql
 ```
 
-After editing any SQL file, run `sqlfluff lint --dialect postgres .` to check formatting and
+After editing any SQL file, run `sqlfluff lint --dialect postgres .` to check
+formatting and
 fix all issues. Follow these steps:
 
 1. Run `sqlfluff lint --dialect postgres .` to identify formatting issues

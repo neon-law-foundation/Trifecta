@@ -6,13 +6,15 @@
 /code FEATURE_NAME DESCRIPTION
 ```
 
-Where `FEATURE_NAME` is the name for the new feature (e.g., `UserAuthentication`, `BlogManagement`).
+Where `FEATURE_NAME` is the name for the new feature (e.g.,
+`UserAuthentication`, `BlogManagement`).
 
 Where `DESCRIPTION` is a brief description of the feature to implement.
 
 ## Steps
 
-This command orchestrates the implementation of new features through a structured, multi-agent approach. Follow these steps:
+This command orchestrates the implementation of new features through a
+structured, multi-agent approach. Follow these steps:
 
 1. **Planning Phase**: Ask intelligent questions to understand requirements
 2. **Database Layer**: Use database-developer agent for data foundation
@@ -21,7 +23,8 @@ This command orchestrates the implementation of new features through a structure
 
 ## Planning Questions
 
-Before implementation, ask these 5 intelligent questions to understand the feature requirements:
+Before implementation, ask these 5 intelligent questions to understand the
+feature requirements:
 
 ### 1. Data Model Requirements
 
@@ -30,22 +33,26 @@ relationships, and any business constraints."
 
 ### 2. API Interface Design
 
-"What API endpoints are needed? Describe the request/response patterns, authentication
+"What API endpoints are needed? Describe the request/response patterns,
+authentication
 requirements, and integration points."
 
 ### 3. Business Logic Complexity
 
-"What business rules and validation logic need to be implemented? Are there any complex
+"What business rules and validation logic need to be implemented? Are there any
+complex
 workflows or state transitions?"
 
 ### 4. Dependencies and Integration
 
-"What existing systems, services, or external APIs does this feature need to integrate
+"What existing systems, services, or external APIs does this feature need to
+integrate
 with?"
 
 ### 5. Testing and Quality Requirements
 
-"What are the key success criteria and edge cases that need to be tested? Are there
+"What are the key success criteria and edge cases that need to be tested? Are
+there
 performance or security considerations?"
 
 ## Implementation Workflow
@@ -53,6 +60,7 @@ performance or security considerations?"
 ### Phase 1: Database Foundation (if data changes needed)
 
 Use the `database-developer` agent to:
+
 - Implement the 4-part data pattern (Migration, Model, Repository, Seeds)
 - Create database schema with proper constraints
 - Build repository layer with full CRUD operations
@@ -61,6 +69,7 @@ Use the `database-developer` agent to:
 ### Phase 2: Feature Implementation
 
 Use the `feature-developer` agent to:
+
 - Build Vapor controllers and routes
 - Implement OpenAPI-first API design
 - Create service layer with business logic
@@ -70,6 +79,7 @@ Use the `feature-developer` agent to:
 ### Phase 3: Quality Validation
 
 Use the `tester` agent to:
+
 - Run `swift test` and analyze failures
 - Fix failing tests (no skipping allowed)
 - Validate quality compliance
@@ -118,6 +128,7 @@ All implementations must follow the CLAUDE.md guidelines:
 ## Error Handling
 
 If any phase fails:
+
 1. **Database issues**: Fix schema, constraints, or repository errors
 2. **Feature issues**: Resolve API, business logic, or integration problems  
 3. **Test failures**: Debug and fix without skipping tests
@@ -126,12 +137,15 @@ If any phase fails:
 ## Success Criteria
 
 A feature implementation is complete when:
+
 1. 🗄️ **Database layer** is solid and tested
 2. 🚀 **Feature layer** implements all requirements
 3. ✅ **All tests pass** with exit code 0
 4. 📋 **Quality standards** are met
 5. 🔄 **Integration** works end-to-end
 
-The `/code` command ensures systematic, high-quality implementation through coordinated
-specialist agents, following the layered architecture principle of database foundation
+The `/code` command ensures systematic, high-quality implementation through
+coordinated
+specialist agents, following the layered architecture principle of database
+foundation
 first, then feature implementation, then validation.
