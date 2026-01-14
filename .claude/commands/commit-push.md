@@ -25,7 +25,8 @@ all validation/test commands within that repository context.
 
 ## Steps
 
-1. Check that we are not on the main branch.
+1. Check that we are not on the main branch. If on main, create a feature branch
+   with a descriptive name before proceeding.
 2. **MANDATORY**: Run markdown formatting validation using
   `./scripts/validate-markdown.sh --fix` and then
    `./scripts/validate-markdown.sh` to ensure it exits with code 0.
@@ -33,5 +34,9 @@ all validation/test commands within that repository context.
   code 0. If any tests
    fail, DO NOT proceed with commit.
 4. Run `git add .` to stage all changes.
-5. Create a descriptive commit message following conventional commit format.
-6. Push the changes to the remote repository.
+5. Create a descriptive commit message following conventional commit format
+   (e.g., `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`).
+6. Push the changes to the remote repository with `-u` flag to set upstream.
+7. **MANDATORY**: Check if a PR exists for the current branch using
+   `gh pr view --json number 2>/dev/null`. If no PR exists, create one using
+   `gh pr create` with a descriptive title and body that summarizes the changes.
