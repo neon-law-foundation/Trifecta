@@ -57,50 +57,82 @@ git push -u origin feature/{descriptive-name}
 
 ## Merge Operations
 
-### Pre-Merge Validation
+**CRITICAL**: All merges to main MUST go through Pull Requests. Never merge
+directly to main branch locally.
+
+### Pre-Merge Validation (Before Creating PR)
 
 1. **Sync with Remote**
 
-```bash
-git fetch origin
-git status
-```
+   ```bash
+   git fetch origin
+   git status
+   ```
 
 1. **Check for Conflicts**
 
-```bash
-git merge-base HEAD origin/main
-git diff HEAD...origin/main
-```
+   ```bash
+   git merge-base HEAD origin/main
+   git diff HEAD...origin/main
+   ```
 
 1. **Test Current Branch**
 
-```bash
-swift test
-# MUST exit with code 0
-```
+   ```bash
+   swift test
+   # MUST exit with code 0
+   ```
 
-### Safe Merge Protocol
+### Safe Merge Protocol (PR-Based Only)
 
-1. **Update Target Branch**
+**NEVER merge directly to main. Always use Pull Requests.**
 
-```bash
-git checkout main
-git pull origin main
-```
+1. **Rebase Feature Branch onto Main**
 
-1. **Merge Feature Branch**
+   ```bash
+   git checkout feature/{branch-name}
+   git fetch origin
+   git rebase origin/main
+   ```
 
-```bash
-git merge --no-ff feature/{branch-name}
-```
+1. **Push Feature Branch**
+
+   ```bash
+   git push -u origin feature/{branch-name}
+   # Or force push after rebase:
+   git push --force-with-lease origin feature/{branch-name}
+   ```
+
+1. **Create or Verify PR Exists**
+
+   ```bash
+   # Check if PR exists
+   PR_EXISTS=$(gh pr list --head feature/{branch-name} --state open --json number -q '.[0].number')
+
+   if [ -z "$PR_EXISTS" ]; then
+       # Create PR
+       gh pr create --title "feat: description" --body "Summary of changes"
+   fi
+
+   # View PR
+   gh pr view --web
+   ```
+
+1. **Merge via PR (After Approval)**
+
+   ```bash
+   # Only after PR is approved:
+   gh pr merge --squash
+   ```
 
 1. **Verify Merge**
 
-```bash
-git log --oneline -5
-swift build
-```
+   ```bash
+   git checkout main
+   git pull origin main
+   git log --oneline -5
+   swift build
+   ```
 
 ## Conflict Resolution
 
@@ -362,20 +394,44 @@ Ready for: {next action}
 ### NEVER
 
 - Force push to main branch
+- Merge directly to main branch locally (always use PRs)
+- Push directly to main branch
 - Delete branches without verification
 - Ignore merge conflicts
 - Skip testing after operations
 - Lose commit history unnecessarily
+- Push feature branches without ensuring a PR exists
 
 ### ALWAYS
 
+- Use Pull Requests for all merges to main
+- Create a PR immediately after pushing a feature branch
 - Test after every merge/rebase
 - Verify branch state before operations
 - Keep commit history clean
 - Use descriptive branch names
 - Coordinate with team on shared branches
+- Report the PR URL after push operations
+
+## PR Workflow Integration
+
+After any push to a feature branch:
+
+```bash
+# Check for existing PR
+BRANCH=$(git branch --show-current)
+PR_NUM=$(gh pr list --head "$BRANCH" --state open --json number -q '.[0].number')
+
+if [ -z "$PR_NUM" ]; then
+    echo "Creating PR for branch $BRANCH..."
+    gh pr create --fill
+fi
+
+# Show PR status
+gh pr view
+```
 
 Remember: The Git Branch Manager manages the branching strategy that keeps the
-codebase
-organized and conflict-free. Every branch operation should be deliberate,
-tested, and leave the repository in a better state than before.
+codebase organized and conflict-free. Every branch operation should be
+deliberate, tested, and leave the repository in a better state than before.
+**All changes to main MUST go through Pull Requests - no exceptions.**

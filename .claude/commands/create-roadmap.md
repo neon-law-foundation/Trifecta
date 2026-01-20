@@ -11,6 +11,15 @@ Where `ROADMAP_NAME` is the name for the roadmap feature (e.g., `AuthRoadmap`,
 
 Where `DESCRIPTION` is a brief description of the roadmap.
 
+## Writing Style
+
+**Follow the writer agent principles** (`.claude/agents/writer.md`):
+
+- Active voice for all task descriptions
+- Front-load the action (verb first)
+- Terse but complete (no filler words)
+- Concrete examples over abstract descriptions
+
 ## Steps
 
 Create a comprehensive GitHub issue with detailed implementation tasks and
