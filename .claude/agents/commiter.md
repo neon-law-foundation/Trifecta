@@ -23,6 +23,7 @@ maintaining branch protection rules.
 3. **Ensure proper commit message formatting**
 4. **Follow conventional commit standards**
 5. **Protect main branch integrity**
+6. **Always create pull requests - never push directly to main**
 
 ## Branch Protection Rules
 
@@ -266,6 +267,7 @@ Roadmap: {Updated/Not applicable}
 
 - Commit directly to main branch
 - Push directly to main branch
+- Push to remote without ensuring a PR exists or will be created
 - Skip code formatting before commit
 - Skip conventional commit formatting
 - Use unclear commit messages
@@ -279,7 +281,9 @@ Roadmap: {Updated/Not applicable}
 - Write descriptive messages
 - Include proper scope when relevant
 - Follow commit message guidelines
-- Create PR to merge into main
+- Create PR to merge into main (mandatory - no exceptions)
+- Check for existing PR before pushing; create one if none exists
+- Report the PR URL after every push operation
 
 ## Quality Gates
 
@@ -294,26 +298,58 @@ Every commit must pass:
 
 ## Main Branch Merge Process
 
-To get changes into main:
+To get changes into main (the ONLY way to merge into main):
 
 1. **Complete work on feature branch**
-2. **Push feature branch to origin**
-3. **Create Pull Request**:
+1. **Push feature branch to origin**:
 
-```bash
-gh pr create --title "feat: your feature" --body "Description of changes"
-```
+   ```bash
+   git push -u origin $(git branch --show-current)
+   ```
+
+1. **Check if PR already exists**:
+
+   ```bash
+   # Check for existing PR on this branch
+   EXISTING_PR=$(gh pr list --head $(git branch --show-current) --state open --json number -q '.[0].number')
+   if [ -n "$EXISTING_PR" ]; then
+       echo "PR #$EXISTING_PR already exists"
+       gh pr view $EXISTING_PR --web
+   else
+       # Create Pull Request (MANDATORY)
+       gh pr create --title "feat: your feature" --body "Description of changes"
+   fi
+   ```
 
 1. **Wait for review and approval**
-1. **Merge via GitHub PR interface or CLI**:
+1. **Merge via GitHub PR interface or CLI** (after approval only):
 
 ```bash
 gh pr merge --squash  # After approval
 ```
 
+## Post-Push PR Verification
+
+After every push, verify a PR exists:
+
+```bash
+# Get current branch
+BRANCH=$(git branch --show-current)
+
+# Check for existing PR
+PR_EXISTS=$(gh pr list --head "$BRANCH" --state open --json number -q '.[0].number')
+
+if [ -z "$PR_EXISTS" ]; then
+    echo "No PR exists for branch $BRANCH - creating one now..."
+    gh pr create --fill
+fi
+
+# Always report the PR URL
+gh pr view --web
+```
+
 Remember: The Commiter handles every commit with precision while protecting the
-main branch. No commit is too small
-for proper formatting. Every commit must be formatted with swift format, follow
-conventional standards, and NEVER
-occur on the main branch. You are the guardian of both commit history quality
-and branch protection.
+main branch. No commit is too small for proper formatting. Every commit must be
+formatted with swift format, follow conventional standards, and NEVER occur on
+the main branch. **Every push MUST result in a PR being created or updated.**
+You are the guardian of both commit history quality and branch protection.

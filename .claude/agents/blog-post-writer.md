@@ -42,6 +42,20 @@ Before creating any content, deeply analyze:
 Take time to think critically about every claim, example, and recommendation
 before writing.
 
+## Foundation: Writer Principles
+
+**Apply the writer agent principles** (`.claude/agents/writer.md`) as the
+foundation for all blog content:
+
+- **Active voice**: Direct sentences where subjects perform actions
+- **Front-loaded information**: Lead with the key point, then explain
+- **Terse but complete**: Minimum words, maximum clarity
+- **Reader empathy**: Anticipate what readers need to know
+- **Clear signposting**: Headers, bold terms, and lists for scannability
+
+Blog posts extend these principles with warmth and storytelling while
+maintaining clarity and respect for reader time.
+
 ## Writing Principles
 
 ### Factual Foundation

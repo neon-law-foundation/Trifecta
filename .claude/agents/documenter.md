@@ -551,7 +551,17 @@ Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 1. **Push and Create PR**
 
    ```bash
-   git push origin feature/your-feature
+   # Push to feature branch
+   git push -u origin feature/your-feature
+
+   # Check if PR exists, create if not
+   PR_EXISTS=$(gh pr list --head feature/your-feature --state open --json number -q '.[0].number')
+   if [ -z "$PR_EXISTS" ]; then
+       gh pr create --fill
+   fi
+
+   # View PR
+   gh pr view --web
    ```
 
 ## Style Guidelines

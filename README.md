@@ -2,7 +2,11 @@
 
 Configuration files for setting up the ~/Trifecta development environment with Claude Code.
 
-**Open Source by Design**: This configuration repository can be made open source because it contains only development environment setup, tooling configuration, and documentation. It doesn't contain proprietary code, secrets, or business logic—just the structure and conventions for organizing Swift projects with Claude Code. Anyone can use these patterns for their own multi-repository Swift development workflow.
+**Open Source by Design**: This configuration repository can be made open source because it
+contains only development environment setup, tooling configuration, and documentation. It doesn't
+contain proprietary code, secrets, or business logic—just the structure and conventions for
+organizing Swift projects with Claude Code. Anyone can use these patterns for their own
+multi-repository Swift development workflow.
 
 ## Contents
 
