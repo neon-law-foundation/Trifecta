@@ -64,24 +64,24 @@ directly to main branch locally.
 
 1. **Sync with Remote**
 
-```bash
-git fetch origin
-git status
-```
+   ```bash
+   git fetch origin
+   git status
+   ```
 
-2. **Check for Conflicts**
+1. **Check for Conflicts**
 
-```bash
-git merge-base HEAD origin/main
-git diff HEAD...origin/main
-```
+   ```bash
+   git merge-base HEAD origin/main
+   git diff HEAD...origin/main
+   ```
 
-3. **Test Current Branch**
+1. **Test Current Branch**
 
-```bash
-swift test
-# MUST exit with code 0
-```
+   ```bash
+   swift test
+   # MUST exit with code 0
+   ```
 
 ### Safe Merge Protocol (PR-Based Only)
 
@@ -89,50 +89,50 @@ swift test
 
 1. **Rebase Feature Branch onto Main**
 
-```bash
-git checkout feature/{branch-name}
-git fetch origin
-git rebase origin/main
-```
+   ```bash
+   git checkout feature/{branch-name}
+   git fetch origin
+   git rebase origin/main
+   ```
 
-2. **Push Feature Branch**
+1. **Push Feature Branch**
 
-```bash
-git push -u origin feature/{branch-name}
-# Or force push after rebase:
-git push --force-with-lease origin feature/{branch-name}
-```
+   ```bash
+   git push -u origin feature/{branch-name}
+   # Or force push after rebase:
+   git push --force-with-lease origin feature/{branch-name}
+   ```
 
-3. **Create or Verify PR Exists**
+1. **Create or Verify PR Exists**
 
-```bash
-# Check if PR exists
-PR_EXISTS=$(gh pr list --head feature/{branch-name} --state open --json number -q '.[0].number')
+   ```bash
+   # Check if PR exists
+   PR_EXISTS=$(gh pr list --head feature/{branch-name} --state open --json number -q '.[0].number')
 
-if [ -z "$PR_EXISTS" ]; then
-    # Create PR
-    gh pr create --title "feat: description" --body "Summary of changes"
-fi
+   if [ -z "$PR_EXISTS" ]; then
+       # Create PR
+       gh pr create --title "feat: description" --body "Summary of changes"
+   fi
 
-# View PR
-gh pr view --web
-```
+   # View PR
+   gh pr view --web
+   ```
 
-4. **Merge via PR (After Approval)**
+1. **Merge via PR (After Approval)**
 
-```bash
-# Only after PR is approved:
-gh pr merge --squash
-```
+   ```bash
+   # Only after PR is approved:
+   gh pr merge --squash
+   ```
 
-5. **Verify Merge**
+1. **Verify Merge**
 
-```bash
-git checkout main
-git pull origin main
-git log --oneline -5
-swift build
-```
+   ```bash
+   git checkout main
+   git pull origin main
+   git log --oneline -5
+   swift build
+   ```
 
 ## Conflict Resolution
 

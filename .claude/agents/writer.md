@@ -173,7 +173,7 @@ Requirements:
 
 Use specific examples, real values, and actual code.
 
-```markdown
+````markdown
 <!-- BAD: Abstract -->
 Configure the database connection with appropriate values.
 
@@ -183,7 +183,7 @@ Configure the database connection:
 ```bash
 export DATABASE_URL="postgres://user:pass@localhost:5432/myapp"
 ```
-```
+````
 
 ### 7. Consistent Terminology
 
@@ -261,7 +261,7 @@ Common problems and solutions.
 
 ### Reference Documentation Pattern
 
-```markdown
+````markdown
 # [Component] Reference
 
 Brief description of the component.
@@ -290,10 +290,10 @@ let result = functionName(param: value)
 
 ## Configuration Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `foo`  | String | `"bar"` | What foo does |
-```
+| Option | Type    | Default | Description   |
+|--------|---------|---------|---------------|
+| `foo`  | String  | `"bar"` | What foo does |
+````
 
 ## Quality Checklist
 

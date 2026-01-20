@@ -59,6 +59,7 @@ After processing all repositories, display a summary table:
 ```
 
 The table should show:
+
 - **Repository**: Organization/RepoName format
 - **Branch**: The branch that was checked (before any action)
 - **PR Status**: MERGED, OPEN, or "-" if on main/no PR

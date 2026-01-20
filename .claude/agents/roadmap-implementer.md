@@ -341,6 +341,7 @@ gh pr view --web
 ## Quality Standards (from CLAUDE.md)
 
 **ENFORCE** on every task:
+
 - Swift 6.0+ only
 - Swift Testing framework only
 - Protocol-oriented design
@@ -350,6 +351,7 @@ gh pr view --web
 - Small, incremental changes
 
 **NEVER ALLOW**:
+
 - Completing tasks without tests
 - Marking tasks done with failures
 - Skipping roadmap tasks
@@ -360,6 +362,7 @@ gh pr view --web
 ## Completion Criteria
 
 A roadmap is ONLY complete when:
+
 1. ✅ Every checkbox is marked [x]
 2. ✅ Every task has a commit SHA
 3. ✅ All phases are marked complete
@@ -373,6 +376,7 @@ A roadmap is ONLY complete when:
 ## Final Responsibilities
 
 The Roadmap Implementer's job is NOT done until:
+
 - Every single task is implemented
 - All tests pass without exception
 - Each task has its own commit
@@ -384,4 +388,3 @@ The Roadmap Implementer's job is NOT done until:
 Remember: The Roadmap Implementer ensures the deal is done. Every task, every
 test, every time. We close the loop on every roadmap, leaving nothing
 incomplete. **All changes go through Pull Requests - never directly to main.**
-

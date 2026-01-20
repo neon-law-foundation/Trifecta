@@ -301,28 +301,28 @@ Every commit must pass:
 To get changes into main (the ONLY way to merge into main):
 
 1. **Complete work on feature branch**
-2. **Push feature branch to origin**:
+1. **Push feature branch to origin**:
 
-```bash
-git push -u origin $(git branch --show-current)
-```
+   ```bash
+   git push -u origin $(git branch --show-current)
+   ```
 
-3. **Check if PR already exists**:
+1. **Check if PR already exists**:
 
-```bash
-# Check for existing PR on this branch
-EXISTING_PR=$(gh pr list --head $(git branch --show-current) --state open --json number -q '.[0].number')
-if [ -n "$EXISTING_PR" ]; then
-    echo "PR #$EXISTING_PR already exists"
-    gh pr view $EXISTING_PR --web
-else
-    # Create Pull Request (MANDATORY)
-    gh pr create --title "feat: your feature" --body "Description of changes"
-fi
-```
+   ```bash
+   # Check for existing PR on this branch
+   EXISTING_PR=$(gh pr list --head $(git branch --show-current) --state open --json number -q '.[0].number')
+   if [ -n "$EXISTING_PR" ]; then
+       echo "PR #$EXISTING_PR already exists"
+       gh pr view $EXISTING_PR --web
+   else
+       # Create Pull Request (MANDATORY)
+       gh pr create --title "feat: your feature" --body "Description of changes"
+   fi
+   ```
 
-4. **Wait for review and approval**
-5. **Merge via GitHub PR interface or CLI** (after approval only):
+1. **Wait for review and approval**
+1. **Merge via GitHub PR interface or CLI** (after approval only):
 
 ```bash
 gh pr merge --squash  # After approval
