@@ -46,7 +46,9 @@ current branch.
 1. **Get failed job details**:
 
    ```bash
-   gh api repos/{owner}/{repo}/actions/runs/{RUN_ID}/jobs --jq '.jobs[] | select(.conclusion == "failure") | {name: .name, steps: [.steps[] | select(.conclusion == "failure") | .name]}'
+   gh api repos/{owner}/{repo}/actions/runs/{RUN_ID}/jobs \
+     --jq '.jobs[] | select(.conclusion == "failure") |
+       {name: .name, steps: [.steps[] | select(.conclusion == "failure") | .name]}'
    ```
 
 1. **Get failed step logs**:
