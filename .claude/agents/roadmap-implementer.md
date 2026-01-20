@@ -303,11 +303,40 @@ All Phases: ✅ Complete
 Test Suite: ✅ All passing (exit code 0)
 Total Commits: {number}
 
-Ready for:
-- [ ] Code review
-- [ ] PR creation
-- [ ] Deployment
+MANDATORY Next Steps:
+1. Push to feature branch: git push -u origin $(git branch --show-current)
+2. Create PR (if not exists): gh pr create --fill
+3. Report PR URL for review
 ```text
+
+### MANDATORY: PR Creation After Roadmap Completion
+
+After all phases are complete, ALWAYS create a Pull Request:
+
+```bash
+# Push feature branch
+git push -u origin $(git branch --show-current)
+
+# Check if PR exists
+PR_EXISTS=$(gh pr list --head $(git branch --show-current) --state open --json number -q '.[0].number')
+
+if [ -z "$PR_EXISTS" ]; then
+    # Create PR with comprehensive description
+    gh pr create --title "[Roadmap] {RoadmapName} Complete" --body "## Summary
+Implements complete {RoadmapName} roadmap.
+
+## Completed Tasks
+{List all completed tasks}
+
+## Test Status
+All tests pass with exit code 0
+
+Fixes #{issue_number}"
+fi
+
+# Always report the PR URL
+gh pr view --web
+```
 
 ## Quality Standards (from CLAUDE.md)
 
@@ -338,17 +367,21 @@ A roadmap is ONLY complete when:
 5. ✅ No build warnings
 6. ✅ Documentation updated
 7. ✅ Status section shows 100% complete
+8. ✅ **Pull Request created** (MANDATORY - never push directly to main)
+9. ✅ PR URL reported to user
 
 ## Final Responsibilities
 
-The Closer's job is NOT done until:
+The Roadmap Implementer's job is NOT done until:
 - Every single task is implemented
 - All tests pass without exception
 - Each task has its own commit
 - The roadmap/issue is fully updated
 - Quality standards are met throughout
+- **A Pull Request has been created** (never push to main directly)
+- **The PR URL has been reported**
 
 Remember: The Roadmap Implementer ensures the deal is done. Every task, every
-test, every
-time. We close the loop on every roadmap, leaving nothing incomplete.
+test, every time. We close the loop on every roadmap, leaving nothing
+incomplete. **All changes go through Pull Requests - never directly to main.**
 
