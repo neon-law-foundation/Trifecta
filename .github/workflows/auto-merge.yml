@@ -1,0 +1,45 @@
+name: Auto Merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+  check_suite:
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    name: Enable Auto-Merge
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Enable auto-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          # Check if PR number is available
+          if [ -z "$PR_NUMBER" ]; then
+            # If triggered by check_suite, find the PR number
+            PR_NUMBER=$(gh api \
+              -H "Accept: application/vnd.github+json" \
+              /repos/${{ github.repository }}/commits/${{ github.event.check_suite.head_sha }}/pulls \
+              --jq '.[0].number')
+          fi
+
+          if [ -z "$PR_NUMBER" ]; then
+            echo "No PR found, skipping auto-merge"
+            exit 0
+          fi
+
+          echo "Enabling auto-merge for PR #$PR_NUMBER"
+          gh pr merge "$PR_NUMBER" \
+            --repo ${{ github.repository }} \
+            --auto \
+            --squash \
+            || echo "Auto-merge failed or already enabled"
