@@ -328,6 +328,7 @@ pass the strict formatting check.
 1. **Before ANY commit or PR creation**:
    - Check current branch: `git branch --show-current`
    - If on `main` or `master`, create a feature branch:
+
      ```bash
      git checkout -b feature/descriptive-name-based-on-changes
      ```
@@ -347,11 +348,13 @@ pass the strict formatting check.
 #### Branch Protection Rules
 
 **NEVER**:
+
 - Commit directly to main/master
 - Create PR from main/master
 - Create duplicate PRs for the same branch
 
 **ALWAYS**:
+
 - Work in feature branches
 - Check for existing PRs before creating new ones
 - Use descriptive branch names: `feature/`, `fix/`, `docs/`, etc.
