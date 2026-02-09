@@ -27,7 +27,6 @@ The command will process all repositories in:
 - **Sagebrush/** - Sagebrush Services repositories
   - API
   - Apple
-  - Operations
   - Reporting
   - Web
 
