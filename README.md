@@ -74,7 +74,6 @@ Seven Swift repositories across three legal entities:
 ### Sagebrush Services (SRE)
 
 - **Web** - Marketing site (Toucan static generator)
-- **Operations** - Business materials and AppleScript presentations
 - **Reporting** - Lambda functions for scheduled tasks and billing
 
 **Unified by Swift** - All repos share data models, Swift Testing, architectural patterns, and

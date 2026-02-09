@@ -37,6 +37,20 @@ if [ "$CURRENT_BRANCH" = "main" ]; then
 fi
 ```
 
+1. **Existing PR Check**
+
+```bash
+# Check if PR already exists for this branch
+EXISTING_PR=$(gh pr list --head $(git branch --show-current) --state open --json number,url --jq '.[0]')
+if [ -n "$EXISTING_PR" ]; then
+    PR_NUMBER=$(echo "$EXISTING_PR" | jq -r '.number')
+    PR_URL=$(echo "$EXISTING_PR" | jq -r '.url')
+    echo "✅ PR already exists for this branch"
+    echo "PR #$PR_NUMBER: $PR_URL"
+    exit 0  # No-op, PR already exists
+fi
+```
+
 1. **Build Verification**
 
 ```bash
@@ -439,6 +453,7 @@ Status: ✅ Ready for creation
 ### NEVER
 
 - Create PR from main branch
+- Create duplicate PRs for the same branch
 - Skip test verification
 - Ignore build warnings
 - Create PR with failing tests
@@ -447,6 +462,7 @@ Status: ✅ Ready for creation
 
 ### ALWAYS
 
+- Check if PR already exists before creating
 - Run full test suite
 - Verify all quality gates
 - Link to roadmap issues

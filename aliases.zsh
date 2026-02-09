@@ -6,7 +6,6 @@ alias neonlaw-api="cd ~/Trifecta/NeonLaw/API"
 alias neonlaw-web="cd ~/Trifecta/NeonLaw/Web"
 alias sagebrush-api="cd ~/Trifecta/Sagebrush/API"
 alias sagebrush-apple="cd ~/Trifecta/Sagebrush/Apple"
-alias sagebrush-operations="cd ~/Trifecta/Sagebrush/Operations"
 alias sagebrush-reporting="cd ~/Trifecta/Sagebrush/Reporting"
 alias sagebrush-web="cd ~/Trifecta/Sagebrush/Web"
 

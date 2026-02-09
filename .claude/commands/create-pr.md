@@ -85,8 +85,11 @@ workflow. Follow these steps:
 1. **PR Creation with pull-request-manager** - Use the pull-request-manager
   agent to create pull request:
 
-- Create PR using `gh pr create` with descriptive title and comprehensive
-     summary
+- **First check if PR already exists**: `gh pr list --head $(git branch
+     --show-current) --state open`
+- **If PR exists**: Report the existing PR URL and skip creation (no-op)
+- **If no PR exists**: Create PR using `gh pr create` with descriptive title
+     and comprehensive summary
 - Link to relevant roadmaps GitHub issues in PR description
 - Add appropriate labels and reviewers
 - Include testing verification and quality gates status

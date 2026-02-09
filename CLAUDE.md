@@ -35,7 +35,6 @@ organized by organization:
   - `Web/` - Legal services platform
 - **Sagebrush/**
   - `Web/` - Legal technology platform
-  - `Operations/` - Business operations, marketing, and planning
   - `Reporting/` - Automated reporting and analytics
 
 Each repository is its own git repository with its own dependencies, tests, and
@@ -319,6 +318,46 @@ swift format lint --strict --recursive --parallel --no-color-diagnostics .
 
 **CRITICAL**: Always format your code before committing. The CI pipeline will fail if code doesn't
 pass the strict formatting check.
+
+### Git Workflow
+
+**CRITICAL**: All development happens in feature branches. NEVER commit directly to `main` or `master`.
+
+#### Branch Safety Protocol
+
+1. **Before ANY commit or PR creation**:
+   - Check current branch: `git branch --show-current`
+   - If on `main` or `master`, create a feature branch:
+
+     ```bash
+     git checkout -b feature/descriptive-name-based-on-changes
+     ```
+
+2. **Commit Process**:
+   - Always verify you're NOT on main: `git branch --show-current`
+   - Create commits only on feature branches
+   - Use conventional commit format: `<type>: <description>`
+   - Push to remote: `git push -u origin <branch-name>`
+
+3. **Pull Request Process**:
+   - Check if PR already exists: `gh pr list --head $(git branch --show-current) --state open`
+   - If PR exists: Report URL and skip creation (no-op)
+   - If no PR exists: Create new PR with `gh pr create`
+   - NEVER create PR from main branch
+
+#### Branch Protection Rules
+
+**NEVER**:
+
+- Commit directly to main/master
+- Create PR from main/master
+- Create duplicate PRs for the same branch
+
+**ALWAYS**:
+
+- Work in feature branches
+- Check for existing PRs before creating new ones
+- Use descriptive branch names: `feature/`, `fix/`, `docs/`, etc.
 
 ### TDD Steps
 

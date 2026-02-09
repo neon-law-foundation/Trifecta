@@ -54,14 +54,6 @@ else
     echo "✓ Sagebrush/Apple already exists"
 fi
 
-# Sagebrush/Operations
-if [ ! -d "$TRIFECTA_DIR/Sagebrush/Operations" ]; then
-    echo "Cloning Sagebrush/Operations..."
-    git clone git@github.com:sagebrush-services/Operations.git "$TRIFECTA_DIR/Sagebrush/Operations"
-else
-    echo "✓ Sagebrush/Operations already exists"
-fi
-
 # Sagebrush/Reporting
 if [ ! -d "$TRIFECTA_DIR/Sagebrush/Reporting" ]; then
     echo "Cloning Sagebrush/Reporting..."
@@ -217,7 +209,6 @@ echo "    │   └── Web/"
 echo "    └── Sagebrush/"
 echo "        ├── API/"
 echo "        ├── Apple/"
-echo "        ├── Operations/"
 echo "        ├── Reporting/"
 echo "        └── Web/"
 echo ""
@@ -236,7 +227,7 @@ fi
 echo "  - Use 'trifecta' to navigate to ~/Trifecta"
 echo "  - Use 'nlf-standards', 'nlf-web' for NLF repositories"
 echo "  - Use 'neonlaw-api', 'neonlaw-web' for NeonLaw repositories"
-echo "  - Use 'sagebrush-api', 'sagebrush-apple', 'sagebrush-operations', 'sagebrush-reporting', 'sagebrush-web' for Sagebrush repositories"
+echo "  - Use 'sagebrush-api', 'sagebrush-apple', 'sagebrush-reporting', 'sagebrush-web' for Sagebrush repositories"
 echo "  - Use 'st', 'sb', 'sr' for swift test/build/run"
 echo ""
 echo "Repositories are automatically cloned into their respective organization folders."
