@@ -70,6 +70,14 @@ else
     echo "✓ Sagebrush/Web already exists"
 fi
 
+# Sagebrush/AWS
+if [ ! -d "$TRIFECTA_DIR/Sagebrush/AWS" ]; then
+    echo "Cloning Sagebrush/AWS..."
+    git clone git@github.com:sagebrush-services/AWS.git "$TRIFECTA_DIR/Sagebrush/AWS"
+else
+    echo "✓ Sagebrush/AWS already exists"
+fi
+
 # Sagebrush/API
 if [ ! -d "$TRIFECTA_DIR/Sagebrush/API" ]; then
     echo "Cloning Sagebrush/API..."
@@ -209,6 +217,7 @@ echo "    │   └── Web/"
 echo "    └── Sagebrush/"
 echo "        ├── API/"
 echo "        ├── Apple/"
+echo "        ├── AWS/"
 echo "        ├── Reporting/"
 echo "        └── Web/"
 echo ""
