@@ -9,9 +9,17 @@
 ## Description
 
 Fetch and pull the latest changes from all Git repositories in the Trifecta folder structure. This
-command iterates through all one-level deep repositories in NLF, NeonLaw, and Sagebrush
-organizations, fetching all branches, pruning deleted remote branches, and pulling the latest
-changes.
+command executes the `pull-all.sh` script which iterates through all one-level deep repositories
+in NLF, NeonLaw, and Sagebrush organizations, fetching all branches, pruning deleted remote
+branches, and pulling the latest changes.
+
+## Implementation
+
+Run the pull-all script:
+
+```bash
+~/Trifecta/NLF/Trifecta/scripts/pull-all.sh
+```
 
 ## Repositories
 
@@ -27,6 +35,7 @@ The command will process all repositories in:
 - **Sagebrush/** - Sagebrush Services repositories
   - API
   - Apple
+  - AWS
   - Reporting
   - Web
 
