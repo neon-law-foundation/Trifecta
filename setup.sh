@@ -38,14 +38,6 @@ echo "✓ Symlinks created (source: ~/Trifecta/NLF/Trifecta)"
 echo ""
 echo "Checking repositories..."
 
-# Sagebrush/API
-if [ ! -d "$TRIFECTA_DIR/Sagebrush/API" ]; then
-    echo "Cloning Sagebrush/API..."
-    git clone git@github.com:sagebrush-services/API.git "$TRIFECTA_DIR/Sagebrush/API"
-else
-    echo "✓ Sagebrush/API already exists"
-fi
-
 # Sagebrush/Apple
 if [ ! -d "$TRIFECTA_DIR/Sagebrush/Apple" ]; then
     echo "Cloning Sagebrush/Apple..."
@@ -76,14 +68,6 @@ if [ ! -d "$TRIFECTA_DIR/Sagebrush/AWS" ]; then
     git clone git@github.com:sagebrush-services/AWS.git "$TRIFECTA_DIR/Sagebrush/AWS"
 else
     echo "✓ Sagebrush/AWS already exists"
-fi
-
-# Sagebrush/API
-if [ ! -d "$TRIFECTA_DIR/Sagebrush/API" ]; then
-    echo "Cloning Sagebrush/API..."
-    git clone git@github.com:sagebrush-services/API.git "$TRIFECTA_DIR/Sagebrush/API"
-else
-    echo "✓ Sagebrush/API already exists"
 fi
 
 # NLF/Web
@@ -215,7 +199,6 @@ echo "    │   ├── SagebrushStandards/"
 echo "    │   ├── Trifecta/ (configuration git repository)"
 echo "    │   └── Web/"
 echo "    └── Sagebrush/"
-echo "        ├── API/"
 echo "        ├── Apple/"
 echo "        ├── AWS/"
 echo "        ├── Reporting/"
@@ -236,7 +219,7 @@ fi
 echo "  - Use 'trifecta' to navigate to ~/Trifecta"
 echo "  - Use 'nlf-standards', 'nlf-web' for NLF repositories"
 echo "  - Use 'neonlaw-api', 'neonlaw-web' for NeonLaw repositories"
-echo "  - Use 'sagebrush-api', 'sagebrush-apple', 'sagebrush-reporting', 'sagebrush-web' for Sagebrush repositories"
+echo "  - Use 'sagebrush-apple', 'sagebrush-reporting', 'sagebrush-web' for Sagebrush repositories"
 echo "  - Use 'st', 'sb', 'sr' for swift test/build/run"
 echo ""
 echo "Repositories are automatically cloned into their respective organization folders."
