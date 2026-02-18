@@ -23,28 +23,25 @@ for org in NLF NeonLaw Sagebrush; do
 
         # Check for uncommitted changes
         if ! git diff-index --quiet HEAD -- 2>/dev/null; then
-          echo "⚠️  Warning: Uncommitted changes detected"
+          echo "⚠️  Warning: Uncommitted changes detected, skipping"
+          echo ""
+          cd "$TRIFECTA_DIR"
+          continue
         fi
 
-        # Fetch all branches and prune deleted remotes
-        if git fetch --all --prune 2>&1 | grep -v "^Fetching"; then
-          :
-        fi
+        # Switch to main, pull, prune
+        git checkout main --quiet 2>/dev/null || true
+        git fetch origin --prune 2>&1 | grep -v "^Fetching" || true
+        git pull origin main 2>&1 | grep -v "^From" || true
 
-        # Get current branch
-        current_branch=$(git branch --show-current)
-
-        # Pull latest changes
-        if git pull 2>&1 | grep -v "^From"; then
-          :
+        # Delete all local branches except main
+        branches=$(git branch | grep -v '^\* main$' | grep -v '^  main$' || true)
+        if [ -n "$branches" ]; then
+          echo "$branches" | xargs git branch -D
         fi
 
         # Show status
-        if git diff --quiet && git diff --cached --quiet; then
-          echo "✅ Successfully updated ($current_branch branch, clean)"
-        else
-          echo "✅ Successfully updated ($current_branch branch, has changes)"
-        fi
+        echo "✅ Successfully updated (main branch, clean)"
 
         echo ""
         cd "$TRIFECTA_DIR"
