@@ -1,15 +1,12 @@
-name: Markdown Lint
+name: Continuous Integration
 
 on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - main
 
 jobs:
-  lint:
+  tests:
     name: Lint Markdown
     runs-on: ubuntu-latest
     steps:
