@@ -16,7 +16,7 @@ jobs:
   auto-merge:
     name: Enable Auto-Merge
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
+    if: github.event.pull_request.draft != true
     steps:
       - name: Enable auto-merge
         env:
