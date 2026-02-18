@@ -22,7 +22,8 @@ for org in ~/Trifecta/*/; do
   for repo in "$org"*/; do
     if [ -d "$repo/.git" ]; then
       echo "--- $(basename $org)/$(basename $repo) ---"
-      gh pr list --state open --repo "$(git -C "$repo" remote get-url origin | sed 's|.*github.com[:/]||;s|\.git$||')" 2>/dev/null || echo "(no PRs or not a GitHub repo)"
+      remote=$(git -C "$repo" remote get-url origin | sed 's|.*github.com[:/]||;s|\.git$||')
+      gh pr list --state open --repo "$remote" 2>/dev/null || echo "(no PRs or not a GitHub repo)"
     fi
   done
 done
