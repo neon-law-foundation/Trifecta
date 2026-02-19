@@ -219,7 +219,7 @@ fi
 echo "  - Use 'trifecta' to navigate to ~/Trifecta"
 echo "  - Use 'nlf-standards', 'nlf-web' for NLF repositories"
 echo "  - Use 'neonlaw-api', 'neonlaw-web' for NeonLaw repositories"
-echo "  - Use 'sagebrush-api', 'sagebrush-apple', 'sagebrush-reporting', 'sagebrush-web' for Sagebrush repositories"
+echo "  - Use 'sagebrush-apple', 'sagebrush-reporting', 'sagebrush-web' for Sagebrush repositories"
 echo "  - Use 'st', 'sb', 'sr' for swift test/build/run"
 echo ""
 echo "Repositories are automatically cloned into their respective organization folders."
