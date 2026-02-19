@@ -33,7 +33,6 @@ The command will process all repositories in:
   - API
   - Web
 - **Sagebrush/** - Sagebrush Services repositories
-  - API
   - Apple
   - AWS
   - Reporting
@@ -48,6 +47,11 @@ For each repository:
 3. Pull latest changes for current branch: `git pull`
 4. Display current branch and status
 5. Report success or any errors
+
+After running the script, check if any repository is not on `main`. For each such repository:
+
+1. Switch to `main`: `git checkout main`
+2. Reset to match the remote in case of divergence: `git reset --hard origin/main`
 
 ## Output
 
