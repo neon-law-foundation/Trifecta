@@ -344,6 +344,8 @@ pass the strict formatting check.
    - If PR exists: Report URL and skip creation (no-op)
    - If no PR exists: Create new PR with `gh pr create`
    - NEVER create PR from main branch
+   - NEVER manually merge a PR — auto-merge is handled by the `auto-merge.yaml` GitHub Actions
+     workflow present in every repository
 
 #### Branch Protection Rules
 
@@ -352,6 +354,7 @@ pass the strict formatting check.
 - Commit directly to main/master
 - Create PR from main/master
 - Create duplicate PRs for the same branch
+- Manually merge a PR (always use auto-merge)
 
 **ALWAYS**:
 
@@ -420,6 +423,8 @@ enum ServiceError: Error, LocalizedError {
 6. **Never** put business logic in controllers
 7. **Never** assume implementation details - always ask
 8. **Never** use `defer` statements in Swift code
+9. **Never** manually merge a PR — auto-merge is handled by the `auto-merge.yaml` GitHub Actions
+  workflow in every repository
 
 ## Key Resources
 
