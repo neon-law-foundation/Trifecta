@@ -86,28 +86,12 @@ else
     echo "✓ NLF/SagebrushStandards already exists"
 fi
 
-# NeonLaw/API
-if [ ! -d "$TRIFECTA_DIR/NeonLaw/API" ]; then
-    echo "Cloning NeonLaw/API..."
-    git clone git@github.com:neon-law/API.git "$TRIFECTA_DIR/NeonLaw/API"
-else
-    echo "✓ NeonLaw/API already exists"
-fi
-
 # NeonLaw/Web
 if [ ! -d "$TRIFECTA_DIR/NeonLaw/Web" ]; then
     echo "Cloning NeonLaw/Web..."
     git clone git@github.com:neon-law/Web.git "$TRIFECTA_DIR/NeonLaw/Web"
 else
     echo "✓ NeonLaw/Web already exists"
-fi
-
-# NeonLaw/API
-if [ ! -d "$TRIFECTA_DIR/NeonLaw/API" ]; then
-    echo "Cloning NeonLaw/API..."
-    git clone git@github.com:neon-law/API.git "$TRIFECTA_DIR/NeonLaw/API"
-else
-    echo "✓ NeonLaw/API already exists"
 fi
 
 # Setup shell aliases
@@ -192,7 +176,6 @@ echo "  ~/Trifecta/"
 echo "    ├── CLAUDE.md (symlink → ~/Trifecta/NLF/Trifecta/CLAUDE.md)"
 echo "    ├── .claude/ (symlink → ~/Trifecta/NLF/Trifecta/.claude/)"
 echo "    ├── NeonLaw/"
-echo "    │   ├── API/"
 echo "    │   └── Web/"
 echo "    ├── NLF/"
 echo "    │   ├── SagebrushStandards/"
@@ -218,7 +201,7 @@ else
 fi
 echo "  - Use 'trifecta' to navigate to ~/Trifecta"
 echo "  - Use 'nlf-standards', 'nlf-web' for NLF repositories"
-echo "  - Use 'neonlaw-api', 'neonlaw-web' for NeonLaw repositories"
+echo "  - Use 'neonlaw-web' for NeonLaw repositories"
 echo "  - Use 'sagebrush-apple', 'sagebrush-reporting', 'sagebrush-web' for Sagebrush repositories"
 echo "  - Use 'st', 'sb', 'sr' for swift test/build/run"
 echo ""
