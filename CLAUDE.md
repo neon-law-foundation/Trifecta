@@ -100,20 +100,6 @@ to the `~/Trifecta/NLF/Trifecta` git repository:
 This ensures consistent Claude Code behavior across all Trifecta projects while
 maintaining a single source of truth for configuration.
 
-### Common Command Shortcuts
-
-When you see these phrases, perform the specified actions:
-
-- **"update standards"** → Build and install the Standards CLI to make it
-  available system-wide:
-
-  1. Navigate to `~/Trifecta/NLF/SagebrushStandards/`
-  2. Run `swift build -c release`
-  3. Copy the built executable from `.build/release/` to `~/.local/bin/`
-    (creating the directory if needed)
-  4. Ensure `~/.local/bin` is in the user's PATH
-  5. Verify the installation was successful
-
 ## Core Principles
 
 ### 🚀 Swift Everywhere
