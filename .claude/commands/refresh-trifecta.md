@@ -21,10 +21,8 @@ The command will process all repositories in:
   - Trifecta
   - Web
 - **NeonLaw/** - NeonLaw repositories
-  - API
   - Web
 - **Sagebrush/** - Sagebrush Services repositories
-  - API
   - Apple
   - ScheduledReporting
   - Web
@@ -55,7 +53,6 @@ After processing all repositories, display a summary table:
 | Sagebrush/ScheduledReporting | add-ci-workflow   | MERGED    | Checked out main, pulled, deleted branch    |
 | Sagebrush/Apple             | add-ci-workflow   | MERGED    | Checked out main, pulled, deleted branch    |
 | NLF/Trifecta                | docs/enforce-pr   | OPEN      | Skipped - PR not yet merged                 |
-| NeonLaw/API                 | main              | -         | Already on main, pulled latest              |
 ```
 
 The table should show:
