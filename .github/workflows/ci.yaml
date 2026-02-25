@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  tests:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -23,7 +23,7 @@ jobs:
       - name: Lint Markdown files
         run: markdownlint-cli2 "**/*.md"
 
-  swift-format:
+  tests:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
