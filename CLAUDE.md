@@ -29,7 +29,7 @@ The `~/Trifecta` directory contains multiple independent Swift repositories
 organized by organization:
 
 - **NLF/** (Nicholson Legal Foundation)
-  - `SagebrushStandards/` - Legal standards and compliance library
+  - `Harness/` - Legal standards and compliance library
   - `Web/` - Legal practice management web application
 - **NeonLaw/**
   - `Web/` - Legal services platform
@@ -364,7 +364,7 @@ pass the strict formatting check.
 cd ~/Trifecta/{organization}/{repository}
 
 # Examples:
-# cd ~/Trifecta/NLF/SagebrushStandards
+# cd ~/Trifecta/NLF/Harness
 # cd ~/Trifecta/NeonLaw/Web
 
 # Run tests

@@ -78,12 +78,12 @@ else
     echo "✓ NLF/Web already exists"
 fi
 
-# NLF/SagebrushStandards
-if [ ! -d "$TRIFECTA_DIR/NLF/SagebrushStandards" ]; then
-    echo "Cloning NLF/SagebrushStandards..."
-    git clone git@github.com:neon-law-foundation/SagebrushStandards.git "$TRIFECTA_DIR/NLF/SagebrushStandards"
+# NLF/Harness
+if [ ! -d "$TRIFECTA_DIR/NLF/Harness" ]; then
+    echo "Cloning NLF/Harness..."
+    git clone git@github.com:neon-law-foundation/Harness.git "$TRIFECTA_DIR/NLF/Harness"
 else
-    echo "✓ NLF/SagebrushStandards already exists"
+    echo "✓ NLF/Harness already exists"
 fi
 
 # NeonLaw/Web
@@ -178,7 +178,7 @@ echo "    ├── .claude/ (symlink → ~/Trifecta/NLF/Trifecta/.claude/)"
 echo "    ├── NeonLaw/"
 echo "    │   └── Web/"
 echo "    ├── NLF/"
-echo "    │   ├── SagebrushStandards/"
+echo "    │   ├── Harness/"
 echo "    │   ├── Trifecta/ (configuration git repository)"
 echo "    │   └── Web/"
 echo "    └── Sagebrush/"
