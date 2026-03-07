@@ -140,3 +140,5 @@ aws s3 mb s3://bucket1 --endpoint-url=http://localhost.localstack.cloud:4566
 - **Cost-free** - No AWS charges for local development
 - **Offline capable** - Develop without internet connectivity
 - **Reproducible** - Consistent environment across team members
+
+© 2026 Neon Law Foundation.

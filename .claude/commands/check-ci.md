@@ -3,24 +3,34 @@
 ## Usage
 
 ```txt
-/check-ci [PR_NUMBER]
+/check-ci [@ORG/REPO] [PR_NUMBER]
 ```
 
 ## Description
 
 Check GitHub Actions CI status for a pull request and display any failures with
 their logs. If no PR number is provided, checks the PR associated with the
-current branch.
+current branch. If `@ORG/REPO` is provided (e.g. `@NLF/Harness`), operates on
+that repository instead of the current directory.
 
 ## Steps
+
+1. **Determine the working directory and repository**:
+
+   - If an `@ORG/REPO` argument is provided (starts with `@`), set the working
+     directory: `REPO_DIR=~/Trifecta/ORG/REPO` (strip the `@` and split on `/`)
+   - Otherwise, set `REPO_DIR=.` (current working directory)
+   - All subsequent `gh` commands must be run from `$REPO_DIR` so the `gh`
+     CLI resolves the correct GitHub remote
 
 1. **Determine the PR to check**:
 
    - If `PR_NUMBER` argument is provided, use that
-   - Otherwise, get the PR for the current branch:
+   - Otherwise, get the PR for the current branch from the resolved directory:
 
      ```bash
-     gh pr list --head $(git branch --show-current) --state open --json number -q '.[0].number'
+     cd $REPO_DIR && \
+       gh pr list --head $(git branch --show-current) --state open --json number -q '.[0].number'
      ```
 
    - If no PR found, report error and exit
@@ -28,7 +38,7 @@ current branch.
 1. **Get PR check status**:
 
    ```bash
-   gh pr checks $PR_NUMBER
+   cd $REPO_DIR && gh pr checks $PR_NUMBER
    ```
 
    - If all checks pass, report success and exit
@@ -37,7 +47,8 @@ current branch.
 1. **For each failed check, get the workflow run ID**:
 
    ```bash
-   gh pr checks $PR_NUMBER --json name,state,link --jq '.[] | select(.state == "FAILURE")'
+   cd $REPO_DIR && \
+     gh pr checks $PR_NUMBER --json name,state,link --jq '.[] | select(.state == "FAILURE")'
    ```
 
    - Extract the run ID from the link URL (format:
@@ -46,15 +57,16 @@ current branch.
 1. **Get failed job details**:
 
    ```bash
-   gh api repos/{owner}/{repo}/actions/runs/{RUN_ID}/jobs \
-     --jq '.jobs[] | select(.conclusion == "failure") |
-       {name: .name, steps: [.steps[] | select(.conclusion == "failure") | .name]}'
+   cd $REPO_DIR && \
+     gh api repos/{owner}/{repo}/actions/runs/{RUN_ID}/jobs \
+       --jq '.jobs[] | select(.conclusion == "failure") |
+         {name: .name, steps: [.steps[] | select(.conclusion == "failure") | .name]}'
    ```
 
 1. **Get failed step logs**:
 
    ```bash
-   gh run view $RUN_ID --log-failed
+   cd $REPO_DIR && gh run view $RUN_ID --log-failed
    ```
 
    - Parse the output to extract relevant error messages
