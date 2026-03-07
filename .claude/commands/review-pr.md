@@ -3,174 +3,150 @@
 ## Usage
 
 ```txt
-/review-pr
+/review-pr [@ORG/REPO] [PR_NUMBER]
 ```
 
-Review a PR and automatically fix all failing tests, ensuring compatibility with
-both macOS and Linux platforms.
+## Description
 
-## 🚨 CRITICAL: macOS/Linux Platform Parity
-
-**⚠️ GitHub Actions runs on Linux, local development runs on macOS - EVERY fix
-must consider both platforms!**
-
-### Platform Difference Checklist
-
-- **Foundation**: Some Foundation APIs differ between macOS/Linux
-- **File Paths**: Linux uses case-sensitive paths, macOS typically doesn't
-- **System Libraries**: Not all system libraries available on both platforms
-- **Process APIs**: Process spawning and signals differ
-- **Network Stack**: Socket behavior and DNS resolution can vary
-- **Timezones**: Different timezone database locations
-
-### When Platform-Specific Code is Necessary
-
-If a test fundamentally cannot work on Linux (e.g., requires macOS-specific
-APIs), disable it for CI with appropriate guards:
-
-- Use `#if !os(Linux)` for macOS-only code
-- Use `#if os(Linux)` for Linux-specific workarounds
-- Check for `Environment.get("CI")` to skip tests in CI environment
-- **ALWAYS** document why the test is platform-specific with a comment
-
-## Common Platform-Specific Issues & Solutions
-
-### Issue: URLSession/URLRequest differences
-
-- **macOS**: Full URLSession implementation
-- **Linux**: Limited URLSession, may need FoundationNetworking import
-- **Fix**: `#if canImport(FoundationNetworking) import FoundationNetworking
-  #endif`
-
-### Issue: FileManager path handling
-
-- **macOS**: Case-insensitive by default
-- **Linux**: Always case-sensitive
-- **Fix**: Always use exact case in file paths
-
-### Issue: Date/TimeZone handling
-
-- **macOS**: Uses system timezone database
-- **Linux**: Uses tzdata package (must be installed)
-- **Fix**: Use UTC for tests or mock timezone data
-
-### Issue: Process/Task APIs
-
-- **macOS**: Process class fully available
-- **Linux**: Some Process features missing
-- **Fix**: Use conditional compilation or simpler process spawning
+Work through a pull request's review comments end-to-end: check out the branch,
+run the tests, critically evaluate every comment (from Greptile and human
+reviewers alike), apply fixes, stage changes chunk by chunk with `git add -p`,
+commit, push, and reply to the review.
 
 ## Steps
 
-1. **Analyze GitHub Actions failures first**: Use `gh pr checks` and `gh run
-  view <run-id> --log-failed` to identify the
-   root cause
+### 1. Determine the repository and PR number
 
-- Look specifically for:
-  - `connectionRequestTimeout` errors (database connection pool issues)
-  - Memory allocation failures
-  - Platform-specific compilation errors
-  - Test timeout issues
-  - Resource exhaustion problems
+- If `@ORG/REPO` is provided (e.g. `@NLF/Harness`), set:
+  ```bash
+  REPO_DIR=~/Trifecta/ORG/REPO   # strip @ and expand
+  ```
+- Otherwise set `REPO_DIR=.`
+- If `PR_NUMBER` is not provided, resolve it from the branch:
+  ```bash
+  cd $REPO_DIR && \
+    gh pr list --head $(git branch --show-current) --state open --json number -q '.[0].number'
+  ```
+- Confirm with the user: "Reviewing **ORG/REPO** PR **#N** — is that correct?"
 
-1. **Determine failure type**:
-   - **Build errors**: Compilation failures, missing dependencies, platform
-     issues
-   - **Test errors**: Failed assertions, runtime errors in tests
+### 2. Fetch and check out the branch
 
-2. **If BUILD ERROR**: Continue with build analysis and fixes
-   - **CRITICAL: Run `swift build` locally** to check for compilation errors
-     that may be caused by cross-platform issues
-     (GitHub Actions runs on Linux, local development runs on macOS).
-     Specifically look for:
-     - macOS-only libraries or frameworks (like Foundation components that
-       don't work on Linux)
-     - Platform-specific file paths or system calls
-     - Dependencies that aren't available on Linux Swift
-     - Import statements that work on macOS but fail on Linux
-   - Fix build issues systematically using platform-specific code when necessary
-
-3. **If TEST ERROR**: Collect test failures and STOP
-   - **Collect all failing tests**: Use `swift test` or review CI logs to
-     gather complete list of test failures
-   - **Document test failure details**: Include test names, error messages, and
-     failure context
-   - **STOP and present to developer**: Show the failing tests with their error
-     messages
-   - **WAIT for developer plan**: Do not attempt fixes until developer provides
-     specific guidance on how to address the
-     test failures
-
-4. **After receiving developer's plan (TEST ERRORS ONLY)**:
-   - **Database Connection Pool Analysis**: If seeing
-     `connectionRequestTimeout` errors:
-     - Check for database connection leaks in test code
-     - Verify proper connection cleanup in test teardown methods
-     - Consider database connection pool configuration (max connections,
-       timeout settings)
-     - Look for tests that don't properly close database resources
-   - **Memory and Resource Management**: For memory-related failures:
-     - Use Swift test flags to limit memory usage: `--jobs 1`, `--no-parallel`
-     - Consider environment variables: `SWIFT_MAX_MEMORY_MB`, `MALLOC_CONF`
-     - Remove custom memory profiling scripts that may interfere with standard
-       Swift testing
-     - Run tests with fewer parallel processes to reduce memory pressure
-   - **Fix root causes systematically**:
-     - **Database connection timeouts**: Fix connection pool configuration and
-       test cleanup
-     - **Platform compatibility**: Use conditional compilation (#if os(macOS))
-       when needed
-     - **Memory issues**: Optimize test execution order and resource cleanup
-     - **Resource leaks**: Ensure proper cleanup in test teardown methods
-
-5. **Test execution strategy**:
-   - Run tests with `swift test` to prevent resource conflicts
-   - Use `swift test --filter [TestName]` for targeted testing after fixes
-   - Avoid custom test execution scripts that may interfere with Swift's memory
-     management
-
-6. **Verify fixes**:
-   - Run full test suite locally: `swift test`
-   - Ensure proper resource cleanup between tests
-   - Verify cross-platform compatibility for any platform-specific fixes
-
-7. **Clean up and commit**:
-   - Remove any problematic custom test scripts
-   - Clean up any existing roadmap issues by marking them as complete.
-   - Commit changes with descriptive message detailing the root cause and fix
-
-## Platform Detection Quick Reference
-
-```swift
-// Compile-time platform detection
-#if os(macOS)
-    // macOS-only code
-#elseif os(Linux)
-    // Linux-only code
-#endif
-
-// Runtime CI detection
-if ProcessInfo.processInfo.environment["CI"] != nil {
-    // Running in CI environment (GitHub Actions)
-}
-
-// Combined platform + CI check
-#if os(Linux) || os(macOS)
-    if ProcessInfo.processInfo.environment["CI"] == nil {
-        // Local development (not CI)
-    }
-#endif
-
-// Import platform-specific modules
-#if canImport(FoundationNetworking)
-    import FoundationNetworking  // Linux needs this for URLSession
-#endif
+```bash
+cd $REPO_DIR
+BRANCH=$(gh pr view $PR_NUMBER --json headRefName -q .headRefName)
+git fetch origin $BRANCH
+git checkout $BRANCH
 ```
 
-## Remember: Test Locally on Both Platforms
+### 3. Run the tests
 
-When possible, test your fixes on both platforms:
+```bash
+cd $REPO_DIR && swift test
+```
 
-- **macOS**: `swift test` (local development)
-- **Linux**: Use Docker: `docker run --rm -v "$PWD":/app -w /app swift:latest
-  swift test`
+Record the result (pass / fail count). If tests fail, report the failures
+immediately and stop — do not attempt fixes without a developer-approved plan.
+
+### 4. Fetch all review comments
+
+```bash
+cd $REPO_DIR && gh pr view $PR_NUMBER --comments
+```
+
+Also fetch inline code comments:
+
+```bash
+cd $REPO_DIR && gh api repos/{owner}/{repo}/pulls/$PR_NUMBER/comments \
+  --jq '.[] | {path: .path, line: .line, body: .body, author: .user.login}'
+```
+
+### 5. Critically evaluate every comment
+
+For **each** comment — whether from Greptile or a human reviewer:
+
+- **Understand the concern** before agreeing with it. Greptile analyses are
+  automated; they can be wrong or overly cautious.
+- **Verify the claim** against the actual code. If Greptile says a variable is
+  unset, check whether it is actually unset in every code path.
+- **Distinguish real bugs from style notes**: prioritise correctness issues,
+  then logic gaps, then polish.
+- **Decide: fix, reject with explanation, or ask for clarification.** Document
+  your reasoning for each.
+
+### 6. Apply fixes
+
+For each accepted comment:
+
+- Make the minimal change that addresses the concern — do not refactor
+  surrounding code unless necessary.
+- Re-run tests after each logical group of fixes:
+  ```bash
+  cd $REPO_DIR && swift test
+  ```
+
+### 7. Stage changes chunk by chunk
+
+Review every diff hunk before staging to ensure only intentional changes go in:
+
+```bash
+cd $REPO_DIR && git diff
+```
+
+Stage selectively — hunk by hunk — rather than `git add .`:
+
+```bash
+cd $REPO_DIR && git add -p
+```
+
+For each hunk, ask: "Does this hunk belong in this commit?" Accept (`y`),
+skip (`n`), or split further (`s`).
+
+### 8. Commit and push
+
+Use a descriptive conventional commit:
+
+```bash
+cd $REPO_DIR && git commit -m "fix: address review comments on PR #N\n\n..."
+cd $REPO_DIR && git push
+```
+
+### 9. Reply to the review
+
+Post a comment on the PR summarising what was fixed and what was intentionally
+left unchanged (with reasoning):
+
+```bash
+cd $REPO_DIR && gh pr review $PR_NUMBER --comment --body "..."
+```
+
+For comments that were **rejected**, explain clearly why the original code is
+correct.
+
+## Critical Evaluation Checklist
+
+Before accepting any review comment as a real bug, verify:
+
+- [ ] Does the reviewer's claim match the actual code at the cited location?
+- [ ] Is the issue present in all code paths (not just the happy path)?
+- [ ] Is the fix the reviewer suggests actually correct, or does it introduce
+      a new problem?
+- [ ] Does fixing it break any existing tests?
+- [ ] Is the concern a real functional failure or a stylistic preference?
+
+## Platform and Formatting Checks
+
+After applying all fixes:
+
+```bash
+# Ensure tests still pass
+cd $REPO_DIR && swift test
+
+# Ensure formatting passes CI
+cd $REPO_DIR && swift format lint --strict --recursive --parallel --no-color-diagnostics .
+```
+
+Fix any formatting violations with:
+
+```bash
+cd $REPO_DIR && swift format -i -r .
+```
