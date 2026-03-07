@@ -18,9 +18,9 @@ that repository instead of the current directory.
 1. **Determine the working directory and repository**:
 
    - If an `@ORG/REPO` argument is provided (starts with `@`), set the working
-     directory to `~/Trifecta/ORG/REPO` (strip the `@` and split on `/`)
-   - Otherwise, use the current working directory
-   - All subsequent `gh` commands must be run from this directory so the `gh`
+     directory: `REPO_DIR=~/Trifecta/ORG/REPO` (strip the `@` and split on `/`)
+   - Otherwise, set `REPO_DIR=.` (current working directory)
+   - All subsequent `gh` commands must be run from `$REPO_DIR` so the `gh`
      CLI resolves the correct GitHub remote
 
 1. **Determine the PR to check**:
@@ -29,7 +29,7 @@ that repository instead of the current directory.
    - Otherwise, get the PR for the current branch from the resolved directory:
 
      ```bash
-     cd ~/Trifecta/ORG/REPO && \
+     cd $REPO_DIR && \
        gh pr list --head $(git branch --show-current) --state open --json number -q '.[0].number'
      ```
 
