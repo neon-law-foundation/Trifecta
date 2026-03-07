@@ -21,17 +21,19 @@ mkdir -p "$TRIFECTA_DIR/NLF"
 mkdir -p "$TRIFECTA_DIR/Sagebrush"
 
 # Create symlinks for CLAUDE.md and .claude directory
+# Only these two entries are symlinked from NLF/Trifecta — nothing else.
 echo "Creating symlinks for CLAUDE.md and .claude..."
-if [ -f "$TRIFECTA_DIR/CLAUDE.md" ] && [ ! -L "$TRIFECTA_DIR/CLAUDE.md" ]; then
-    echo "  Removing existing CLAUDE.md file..."
-    rm "$TRIFECTA_DIR/CLAUDE.md"
-fi
-if [ -d "$TRIFECTA_DIR/.claude" ] && [ ! -L "$TRIFECTA_DIR/.claude" ]; then
-    echo "  Removing existing .claude directory..."
-    rm -rf "$TRIFECTA_DIR/.claude"
-fi
-ln -sf "$SCRIPT_DIR/CLAUDE.md" "$TRIFECTA_DIR/CLAUDE.md"
-ln -sf "$SCRIPT_DIR/.claude" "$TRIFECTA_DIR/.claude"
+for target in CLAUDE.md .claude; do
+    src="$SCRIPT_DIR/$target"
+    dst="$TRIFECTA_DIR/$target"
+    # Remove existing real file/directory (not a symlink)
+    if [ -e "$dst" ] && [ ! -L "$dst" ]; then
+        echo "  Removing existing $target (not a symlink)..."
+        rm -rf "$dst"
+    fi
+    # Create or update symlink
+    ln -sf "$src" "$dst"
+done
 echo "✓ Symlinks created (source: ~/Trifecta/NLF/Trifecta)"
 
 # Clone repositories if they don't exist
