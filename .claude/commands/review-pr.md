@@ -18,15 +18,19 @@ commit, push, and reply to the review.
 ### 1. Determine the repository and PR number
 
 - If `@ORG/REPO` is provided (e.g. `@NLF/Harness`), set:
+
   ```bash
   REPO_DIR=~/Trifecta/ORG/REPO   # strip @ and expand
   ```
+
 - Otherwise set `REPO_DIR=.`
 - If `PR_NUMBER` is not provided, resolve it from the branch:
+
   ```bash
   cd $REPO_DIR && \
     gh pr list --head $(git branch --show-current) --state open --json number -q '.[0].number'
   ```
+
 - Confirm with the user: "Reviewing **ORG/REPO** PR **#N** — is that correct?"
 
 ### 2. Fetch and check out the branch
@@ -80,6 +84,7 @@ For each accepted comment:
 - Make the minimal change that addresses the concern — do not refactor
   surrounding code unless necessary.
 - Re-run tests after each logical group of fixes:
+
   ```bash
   cd $REPO_DIR && swift test
   ```
