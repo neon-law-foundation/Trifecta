@@ -409,7 +409,11 @@ enum ServiceError: Error, LocalizedError {
 6. **Never** put business logic in controllers
 7. **Never** assume implementation details - always ask
 8. **Never** use `defer` statements in Swift code
-9. **Never** manually merge a PR — auto-merge is handled by the `auto-merge.yaml` GitHub Actions
+9. **Never** use `#if canImport(...)` or other platform-specific compilation
+  directives - this is a code smell indicating non-cross-platform code. The
+  only exception is `Sagebrush/Apple`, which is an Apple-platform-only
+  repository
+10. **Never** manually merge a PR — auto-merge is handled by the `auto-merge.yaml` GitHub Actions
   workflow in every repository
 
 ## Key Resources
