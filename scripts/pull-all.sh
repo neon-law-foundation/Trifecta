@@ -51,3 +51,7 @@ for org in NLF NeonLaw Sagebrush; do
 done
 
 echo "✨ All repositories updated!"
+
+echo "🔗 Re-running setup to refresh symlinks and clone any missing repositories..."
+echo ""
+bash "$HOME/Trifecta/NLF/Trifecta/setup.sh"

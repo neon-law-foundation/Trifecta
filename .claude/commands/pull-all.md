@@ -8,10 +8,12 @@
 
 ## Description
 
-Fetch and pull the latest changes from all Git repositories in the Trifecta folder structure. This
-command executes the `pull-all.sh` script which iterates through all one-level deep repositories
-in NLF, NeonLaw, and Sagebrush organizations, fetching all branches, pruning deleted remote
-branches, and pulling the latest changes.
+Fetch and pull the latest changes from all Git repositories in the Trifecta folder structure, then
+re-run `setup.sh` to refresh symlinks and clone any missing repositories. Executes the
+`pull-all.sh` script which iterates through all one-level deep repositories in NLF, NeonLaw, and
+Sagebrush organizations, fetching all branches, pruning deleted remote branches, and pulling the
+latest changes. `setup.sh` is idempotent — it only clones repositories that do not already exist
+and always refreshes the `CLAUDE.md` and `.claude` symlinks.
 
 ## Implementation
 
@@ -48,10 +50,10 @@ For each repository:
 4. Display current branch and status
 5. Report success or any errors
 
-After running the script, check if any repository is not on `main`. For each such repository:
+After pulling all repositories:
 
-1. Switch to `main`: `git checkout main`
-2. Reset to match the remote in case of divergence: `git reset --hard origin/main`
+1. Re-run `setup.sh` to refresh `CLAUDE.md` and `.claude` symlinks
+2. Clone any repositories listed in `setup.sh` that are missing from `~/Trifecta`
 
 ## Output
 
